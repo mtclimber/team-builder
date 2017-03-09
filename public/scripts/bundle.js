@@ -38419,7 +38419,70 @@ var Partner = function (_React$Component) {
       return React.createElement(
         'div',
         null,
-        React.createElement(_PageHeader2.default, null)
+        React.createElement(_PageHeader2.default, null),
+        React.createElement(
+          'div',
+          { className: 'partnerForm' },
+          React.createElement(
+            'form',
+            null,
+            React.createElement(
+              'div',
+              { className: 'form-group' },
+              React.createElement(
+                'label',
+                { 'for': 'inputName' },
+                'Name'
+              ),
+              React.createElement('input', { type: 'text', className: 'form-control', id: 'inputName', placeholder: 'Name' })
+            ),
+            React.createElement(
+              'div',
+              { className: 'form-group' },
+              React.createElement(
+                'label',
+                { 'for': 'inputCity' },
+                'City'
+              ),
+              React.createElement('input', { type: 'text', className: 'form-control', id: 'inputCity', placeholder: 'City' })
+            ),
+            React.createElement(
+              'div',
+              { className: 'form-group' },
+              React.createElement(
+                'label',
+                { 'for': 'inputState' },
+                'State'
+              ),
+              React.createElement('input', { type: 'text', className: 'form-control', id: 'inputState', placeholder: 'State' })
+            ),
+            React.createElement(
+              'div',
+              { className: 'form-group' },
+              React.createElement(
+                'label',
+                { 'for': 'inputCity' },
+                'Email'
+              ),
+              React.createElement('input', { type: 'email', className: 'form-control', id: 'inputCity', placeholder: 'Email' })
+            ),
+            React.createElement(
+              'div',
+              { className: 'checkbox' },
+              React.createElement(
+                'label',
+                null,
+                React.createElement('input', { type: 'checkbox' }),
+                ' Remember me'
+              )
+            ),
+            React.createElement(
+              'button',
+              { type: 'submit', className: 'btn btn-primary' },
+              'Login'
+            )
+          )
+        )
       );
     }
   }]);
