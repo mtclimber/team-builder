@@ -13,16 +13,16 @@ class Churches extends React.Component{
     return (
       <div className='row'>
         <div className={churchRowClasses} style={churchRowStyle} >
-          <Church name='Coool Baptist Church' healthIndex='0' />
+          <Church name='Coool Baptist Church' healthIndex='90' lastContacted='1' />
         </div>
         <div className={churchRowClasses} style={churchRowStyle} >
-          <Church name='First Baptist Church of Snoreville' healthIndex='1' />
+          <Church name='First Baptist Church of Snoreville' healthIndex='63' lastContacted='17' />
         </div>
         <div className={churchRowClasses} style={churchRowStyle} >
-          <Church name='Church that we Should Ignore' healthIndex='2' />
+          <Church name='Church that we Should Ignore' healthIndex='31' lastContacted='46' />
         </div>
         <div className={churchRowClasses} style={churchRowStyle} >
-          <Church name='Best Church Eva' healthIndex='3' />
+          <Church name='Best Church Eva' healthIndex='3' lastContacted='99' />
         </div>
       </div>
     );

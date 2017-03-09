@@ -37947,37 +37947,66 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = require('react');
 
-var Church = function (_React$Component) {
-  _inherits(Church, _React$Component);
+var FrontCard = function (_React$Component) {
+  _inherits(FrontCard, _React$Component);
 
-  function Church() {
-    _classCallCheck(this, Church);
+  function FrontCard() {
+    _classCallCheck(this, FrontCard);
 
-    return _possibleConstructorReturn(this, (Church.__proto__ || Object.getPrototypeOf(Church)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (FrontCard.__proto__ || Object.getPrototypeOf(FrontCard)).apply(this, arguments));
   }
 
-  _createClass(Church, [{
-    key: 'getBackgroundColor',
-    value: function getBackgroundColor() {
-      var healthIndex = this.props.healthIndex;
+  _createClass(FrontCard, [{
+    key: 'getProgressBar',
+    value: function getProgressBar() {
+      var healthIndex = Number(this.props.healthIndex);
 
-      if (healthIndex === '3') return "lightseagreen";else if (healthIndex === '2') return "lightsalmon";else if (healthIndex === '1') return "lightslategrey";else if (healthIndex === '0') return "lightcoral";
+      if (healthIndex >= 90) return "success";else if (healthIndex >= 50) return "info";else if (healthIndex >= 25) return "warning";else if (healthIndex >= 0) return "danger";
     }
   }, {
     key: 'getImageSource',
     value: function getImageSource() {
-      var healthIndex = this.props.healthIndex;
+      var healthIndex = Number(this.props.healthIndex);
 
-      if (healthIndex === '3') return "great";else if (healthIndex === '2') return "good";else if (healthIndex === '1') return "sad";else if (healthIndex === '0') return "mad";
+      if (healthIndex >= 90) return "great";else if (healthIndex >= 50) return "good";else if (healthIndex >= 25) return "sad";else if (healthIndex >= 0) return "mad";
+    }
+  }, {
+    key: 'getDaysAgoText',
+    value: function getDaysAgoText() {
+      var days = this.props.lastContacted;
+      if (days === '1') return days + ' day ago';
+
+      return days + ' days ago';
+    }
+  }, {
+    key: 'contact',
+    value: function contact() {
+      console.log('here');
+      this.props.flipCard(true);
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var churchSize = '75px';
       return React.createElement(
         'div',
-        { className: 'church-card' },
+        null,
         React.createElement('img', { style: { 'height': churchSize, 'width': churchSize }, src: '/images/' + this.getImageSource() + '.png' }),
+        React.createElement(
+          'div',
+          { className: 'progress', style: { 'margin': '10px auto 15px auto' } },
+          React.createElement(
+            'div',
+            { className: 'progress-bar progress-bar-' + this.getProgressBar(), role: 'progressbar', 'aria-valuenow': this.props.healthIndex, 'aria-valuemin': '0', 'aria-valuemax': '100', style: { 'width': this.props.healthIndex + '%' } },
+            React.createElement(
+              'span',
+              { className: 'sr-only' },
+              '60% Complete'
+            )
+          )
+        ),
         React.createElement(
           'p',
           { className: 'church-title' },
@@ -37985,16 +38014,112 @@ var Church = function (_React$Component) {
         ),
         React.createElement(
           'div',
-          { style: { 'position': 'absolute', 'bottom': '10', 'left': '10' } },
+          { style: { 'position': 'absolute', 'bottom': '10px', 'left': '0px', 'width': '100%' } },
           React.createElement(
             'button',
-            { className: 'btn btn-primary', style: { 'float': 'left', 'marginRight': '5px' } },
-            'Contacted!'
+            { className: 'btn btn-primary', style: { 'float': 'left', 'marginLeft': '10px' }, onClick: function onClick() {
+                return _this2.contact();
+              } },
+            'Contact'
           ),
           React.createElement(
             'p',
-            null,
-            'Last Contacted: Dec. 25'
+            { style: { 'marginTop': '6px', 'float': 'right', 'marginRight': '10px' } },
+            this.getDaysAgoText()
+          )
+        )
+      );
+    }
+  }]);
+
+  return FrontCard;
+}(React.Component);
+
+var BackCard = function (_React$Component2) {
+  _inherits(BackCard, _React$Component2);
+
+  function BackCard() {
+    _classCallCheck(this, BackCard);
+
+    return _possibleConstructorReturn(this, (BackCard.__proto__ || Object.getPrototypeOf(BackCard)).apply(this, arguments));
+  }
+
+  _createClass(BackCard, [{
+    key: 'render',
+    value: function render() {}
+  }]);
+
+  return BackCard;
+}(React.Component);
+
+var Church = function (_React$Component3) {
+  _inherits(Church, _React$Component3);
+
+  function Church() {
+    _classCallCheck(this, Church);
+
+    var _this4 = _possibleConstructorReturn(this, (Church.__proto__ || Object.getPrototypeOf(Church)).call(this));
+
+    _this4.state = {
+      flipped: false
+    };
+    return _this4;
+  }
+
+  _createClass(Church, [{
+    key: 'getProgressBar',
+    value: function getProgressBar() {
+      var healthIndex = Number(this.props.healthIndex);
+
+      if (healthIndex >= 90) return "success";else if (healthIndex >= 50) return "info";else if (healthIndex >= 25) return "warning";else if (healthIndex >= 0) return "danger";
+    }
+  }, {
+    key: 'getImageSource',
+    value: function getImageSource() {
+      var healthIndex = Number(this.props.healthIndex);
+
+      if (healthIndex >= 90) return "great";else if (healthIndex >= 50) return "good";else if (healthIndex >= 25) return "sad";else if (healthIndex >= 0) return "mad";
+    }
+  }, {
+    key: 'getDaysAgoText',
+    value: function getDaysAgoText() {
+      var days = this.props.lastContacted;
+      if (days === '1') return days + ' day ago';
+
+      return days + ' days ago';
+    }
+  }, {
+    key: 'flipCard',
+    value: function flipCard(flipped) {
+      this.state.flipped = flipped;
+      this.setState(this.state);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this5 = this;
+
+      var churchSize = '75px';
+      var flipclass = 'flip-container';
+      if (this.state.flipped === true) flipclass += ' flipped';
+
+      return React.createElement(
+        'div',
+        { className: flipclass },
+        React.createElement(
+          'div',
+          { className: 'flipper' },
+          React.createElement(
+            'div',
+            { className: 'front' },
+            React.createElement(FrontCard, { name: this.props.name, healthIndex: this.props.healthIndex, lastContacted: this.props.lastContacted, flipCard: function flipCard(flipped) {
+                return _this5.flipCard(flipped);
+              } })
+          ),
+          React.createElement(
+            'div',
+            { className: 'back' },
+            'fdsa'
           )
         )
       );
@@ -38050,22 +38175,22 @@ var Churches = function (_React$Component) {
         React.createElement(
           'div',
           { className: churchRowClasses, style: churchRowStyle },
-          React.createElement(_Church2.default, { name: 'Coool Baptist Church', healthIndex: '0' })
+          React.createElement(_Church2.default, { name: 'Coool Baptist Church', healthIndex: '90', lastContacted: '1' })
         ),
         React.createElement(
           'div',
           { className: churchRowClasses, style: churchRowStyle },
-          React.createElement(_Church2.default, { name: 'First Baptist Church of Snoreville', healthIndex: '1' })
+          React.createElement(_Church2.default, { name: 'First Baptist Church of Snoreville', healthIndex: '63', lastContacted: '17' })
         ),
         React.createElement(
           'div',
           { className: churchRowClasses, style: churchRowStyle },
-          React.createElement(_Church2.default, { name: 'Church that we Should Ignore', healthIndex: '2' })
+          React.createElement(_Church2.default, { name: 'Church that we Should Ignore', healthIndex: '31', lastContacted: '46' })
         ),
         React.createElement(
           'div',
           { className: churchRowClasses, style: churchRowStyle },
-          React.createElement(_Church2.default, { name: 'Best Church Eva', healthIndex: '3' })
+          React.createElement(_Church2.default, { name: 'Best Church Eva', healthIndex: '3', lastContacted: '99' })
         )
       );
     }
