@@ -71,6 +71,7 @@ body {
 
 /* back, initially hidden pane */
 .back {
+	z-index: 0;
   background-color: white;
   padding: 10px;
 	transform: rotateY(180deg);
@@ -78,9 +79,11 @@ body {
 }
 
 .flip-container.flipped .back {
+	z-index: 2;
   height: auto;
 }
 
 .flip-container.flipped .front {
+	z-index: 0;
   height: auto;
 }
