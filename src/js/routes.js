@@ -6,7 +6,7 @@ const Partner = require('./components/pages/Partner/Partner.jsx');
 const routes = (
   <Router history={browserHistory}>
     <Route path="/" component={Dashboard} />
-    <Route path="/partner/" component={Partner} />
+    <Route path="/partner" component={Partner} />
   </Router>
 );
 

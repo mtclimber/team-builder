@@ -1,6 +1,7 @@
 'use strict';
 
 const React = require('react');
+import {Link} from 'react-router';
 import Church from './Church.jsx';
 
 class Churches extends React.Component{
@@ -24,15 +25,22 @@ class Churches extends React.Component{
     };
 
     return (
-      <div className='row'>
-        {this.props.churches.map((church) => {
-          if(this.state.focused === null || this.state.focused === church.name)
-          return (
-            <div key={church.name} className={churchRowClasses} style={churchRowStyle} >
-              <Church name={church.name} healthIndex={church.healthIndex} lastContacted={church.lastContacted} setFocused={(name) => this.setFocused(name)}/>
-            </div>
-          );
-        })}
+      <div>
+        <div className='row'>
+          <div className='col-xs-12' style={{'marginBottom': '10px'}}>
+            <Link to='/partner' className='btn btn-success'>Add Partner</Link>
+          </div>
+        </div>
+        <div className='row'>
+          {this.props.churches.map((church) => {
+            if(this.state.focused === null || this.state.focused === church.name)
+            return (
+              <div key={church.name} className={churchRowClasses} style={churchRowStyle} >
+                <Church name={church.name} healthIndex={church.healthIndex} lastContacted={church.lastContacted} setFocused={(name) => this.setFocused(name)}/>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
