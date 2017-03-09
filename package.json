@@ -11,6 +11,8 @@
   "dependencies": {
     "body-parser": "^1.16.1",
     "bootstrap": "^3.3.7",
+    "c3": "^0.4.11",
+    "d3": "^4.7.1",
     "express": "^4.14.1",
     "font-awesome": "^4.7.0",
     "history": "^4.5.1",
