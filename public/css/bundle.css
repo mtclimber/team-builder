@@ -32,7 +32,6 @@
 
 body {
   background: #e2e1e0;
-  text-align: center;
 }
 
 /*.front .back {
@@ -117,7 +116,7 @@ body {
   width: 100%;
   height: 10px;
   position: relative;
-  
+
   transition: width .5s linear;
 }
 
@@ -128,7 +127,7 @@ body {
   right: 0;
   bottom: 0;
   width: 0px;
-  
+
   transition: width .5s linear;
 }
 .sk-circle {
