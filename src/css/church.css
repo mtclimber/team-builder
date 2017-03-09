@@ -5,7 +5,6 @@
 
 body {
   background: #e2e1e0;
-  text-align: center;
 }
 
 /*.front .back {
@@ -36,6 +35,11 @@ body {
 	height: 300px;
   max-width: 400px;
   min-width: 300px;
+  transition: height 1s ease;
+}
+
+.flip-container.flipped {
+  height: auto;
 }
 
 /* flip speed goes here */
@@ -71,4 +75,12 @@ body {
   padding: 10px;
 	transform: rotateY(180deg);
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.flip-container.flipped .back {
+  height: auto;
+}
+
+.flip-container.flipped .front {
+  height: auto;
 }
