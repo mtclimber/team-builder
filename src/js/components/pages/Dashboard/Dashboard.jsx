@@ -4,15 +4,15 @@ const React = require('react');
 
 import PageHeader from '../shared/PageHeader.jsx';
 
-const HomePage = React.createClass({
-  render: function() {
+class Dashboard extends React.Component{
+  render() {
     return (
       <div>
         <PageHeader />
-        <p>Hello, World!</p>
+                
       </div>
     );
   }
-});
+};
 
-module.exports = HomePage;
+module.exports = Dashboard;
