@@ -37937,34 +37937,199 @@ module.exports = warning;
 },{"_process":41}],247:[function(require,module,exports){
 'use strict';
 
-var _PageHeader = require('../shared/PageHeader.jsx');
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _PageHeader2 = _interopRequireDefault(_PageHeader);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = require('react');
 
-var HomePage = React.createClass({
-    displayName: 'HomePage',
+var Church = function (_React$Component) {
+  _inherits(Church, _React$Component);
 
-    render: function render() {
-        return React.createElement(
-            'div',
-            null,
-            React.createElement(_PageHeader2.default, null),
-            React.createElement(
-                'p',
-                null,
-                'Hello, World!'
-            )
-        );
+  function Church() {
+    _classCallCheck(this, Church);
+
+    return _possibleConstructorReturn(this, (Church.__proto__ || Object.getPrototypeOf(Church)).apply(this, arguments));
+  }
+
+  _createClass(Church, [{
+    key: 'getBackgroundColor',
+    value: function getBackgroundColor() {
+      var healthIndex = this.props.healthIndex;
+
+      if (healthIndex === '3') return "lightseagreen";else if (healthIndex === '2') return "lightsalmon";else if (healthIndex === '1') return "lightslategrey";else if (healthIndex === '0') return "lightcoral";
     }
-});
+  }, {
+    key: 'getImageSource',
+    value: function getImageSource() {
+      var healthIndex = this.props.healthIndex;
 
-module.exports = HomePage;
+      if (healthIndex === '3') return "great";else if (healthIndex === '2') return "good";else if (healthIndex === '1') return "sad";else if (healthIndex === '0') return "mad";
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var churchSize = '75px';
+      return React.createElement(
+        'div',
+        { className: 'church-card' },
+        React.createElement('img', { style: { 'height': churchSize, 'width': churchSize }, src: '/images/' + this.getImageSource() + '.png' }),
+        React.createElement(
+          'p',
+          { className: 'church-title' },
+          this.props.name
+        ),
+        React.createElement(
+          'div',
+          { style: { 'position': 'absolute', 'bottom': '10', 'left': '10' } },
+          React.createElement(
+            'button',
+            { className: 'btn btn-primary', style: { 'float': 'left', 'marginRight': '5px' } },
+            'Contacted!'
+          ),
+          React.createElement(
+            'p',
+            null,
+            'Last Contacted: Dec. 25'
+          )
+        )
+      );
+    }
+  }]);
 
-},{"../shared/PageHeader.jsx":248,"react":244}],248:[function(require,module,exports){
+  return Church;
+}(React.Component);
+
+;
+
+module.exports = Church;
+
+},{"react":244}],248:[function(require,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Church = require('./Church.jsx');
+
+var _Church2 = _interopRequireDefault(_Church);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
+
+var Churches = function (_React$Component) {
+  _inherits(Churches, _React$Component);
+
+  function Churches() {
+    _classCallCheck(this, Churches);
+
+    return _possibleConstructorReturn(this, (Churches.__proto__ || Object.getPrototypeOf(Churches)).apply(this, arguments));
+  }
+
+  _createClass(Churches, [{
+    key: 'render',
+    value: function render() {
+      var churchRowClasses = 'col-xs-12 col-sm-6 col-md-4 col-lg-3';
+      var churchRowStyle = {
+        'marginBottom': '10px'
+      };
+
+      return React.createElement(
+        'div',
+        { className: 'row' },
+        React.createElement(
+          'div',
+          { className: churchRowClasses, style: churchRowStyle },
+          React.createElement(_Church2.default, { name: 'Coool Baptist Church', healthIndex: '0' })
+        ),
+        React.createElement(
+          'div',
+          { className: churchRowClasses, style: churchRowStyle },
+          React.createElement(_Church2.default, { name: 'First Baptist Church of Snoreville', healthIndex: '1' })
+        ),
+        React.createElement(
+          'div',
+          { className: churchRowClasses, style: churchRowStyle },
+          React.createElement(_Church2.default, { name: 'Church that we Should Ignore', healthIndex: '2' })
+        ),
+        React.createElement(
+          'div',
+          { className: churchRowClasses, style: churchRowStyle },
+          React.createElement(_Church2.default, { name: 'Best Church Eva', healthIndex: '3' })
+        )
+      );
+    }
+  }]);
+
+  return Churches;
+}(React.Component);
+
+;
+
+module.exports = Churches;
+
+},{"./Church.jsx":247,"react":244}],249:[function(require,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _PageHeader = require('../../shared/PageHeader.jsx');
+
+var _PageHeader2 = _interopRequireDefault(_PageHeader);
+
+var _Churches = require('./Churches.jsx');
+
+var _Churches2 = _interopRequireDefault(_Churches);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
+
+var Dashboard = function (_React$Component) {
+  _inherits(Dashboard, _React$Component);
+
+  function Dashboard() {
+    _classCallCheck(this, Dashboard);
+
+    return _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).apply(this, arguments));
+  }
+
+  _createClass(Dashboard, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        null,
+        React.createElement(_PageHeader2.default, null),
+        React.createElement(_Churches2.default, null)
+      );
+    }
+  }]);
+
+  return Dashboard;
+}(React.Component);
+
+;
+
+module.exports = Dashboard;
+
+},{"../../shared/PageHeader.jsx":250,"./Churches.jsx":248,"react":244}],250:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -38016,7 +38181,7 @@ var PageHeader = function (_React$Component) {
           _react2.default.createElement(
             'a',
             { className: 'navbar-brand', href: '/' },
-            'Template App'
+            'Team Builder'
           )
         ),
         _react2.default.createElement(
@@ -38069,7 +38234,7 @@ var PageHeader = function (_React$Component) {
 
 module.exports = PageHeader;
 
-},{"react":244,"react-router":196}],249:[function(require,module,exports){
+},{"react":244,"react-router":196}],251:[function(require,module,exports){
 'use strict';
 
 var _reactRouter = require('react-router');
@@ -38088,7 +38253,7 @@ var render = require('react-dom').render;
 
 render(routes, document.getElementById('app'));
 
-},{"./routes":250,"bootstrap":1,"jquery":39,"react":244,"react-dom":43,"react-router":196}],250:[function(require,module,exports){
+},{"./routes":252,"bootstrap":1,"jquery":39,"react":244,"react-dom":43,"react-router":196}],252:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -38099,14 +38264,14 @@ var _reactRouter = require('react-router');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var HomePage = require('./components/pages/Home.jsx');
+var Dashboard = require('./components/pages/Dashboard/Dashboard.jsx');
 
 var routes = _react2.default.createElement(
   _reactRouter.Router,
   { history: _reactRouter.browserHistory },
-  _react2.default.createElement(_reactRouter.Route, { path: '/', component: HomePage })
+  _react2.default.createElement(_reactRouter.Route, { path: '/', component: Dashboard })
 );
 
 module.exports = routes;
 
-},{"./components/pages/Home.jsx":247,"react":244,"react-router":196}]},{},[249]);
+},{"./components/pages/Dashboard/Dashboard.jsx":249,"react":244,"react-router":196}]},{},[251]);
