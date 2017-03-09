@@ -38405,89 +38405,85 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = require('react');
 
 var Partner = function (_React$Component) {
-  _inherits(Partner, _React$Component);
+    _inherits(Partner, _React$Component);
 
-  function Partner() {
-    _classCallCheck(this, Partner);
+    function Partner() {
+        _classCallCheck(this, Partner);
 
-    return _possibleConstructorReturn(this, (Partner.__proto__ || Object.getPrototypeOf(Partner)).apply(this, arguments));
-  }
-
-  _createClass(Partner, [{
-    key: 'render',
-    value: function render() {
-      return React.createElement(
-        'div',
-        null,
-        React.createElement(_PageHeader2.default, null),
-        React.createElement(
-          'div',
-          { className: 'partnerForm' },
-          React.createElement(
-            'form',
-            null,
-            React.createElement(
-              'div',
-              { className: 'form-group' },
-              React.createElement(
-                'label',
-                { 'for': 'inputName' },
-                'Name'
-              ),
-              React.createElement('input', { type: 'text', className: 'form-control', id: 'inputName', placeholder: 'Name' })
-            ),
-            React.createElement(
-              'div',
-              { className: 'form-group' },
-              React.createElement(
-                'label',
-                { 'for': 'inputCity' },
-                'City'
-              ),
-              React.createElement('input', { type: 'text', className: 'form-control', id: 'inputCity', placeholder: 'City' })
-            ),
-            React.createElement(
-              'div',
-              { className: 'form-group' },
-              React.createElement(
-                'label',
-                { 'for': 'inputState' },
-                'State'
-              ),
-              React.createElement('input', { type: 'text', className: 'form-control', id: 'inputState', placeholder: 'State' })
-            ),
-            React.createElement(
-              'div',
-              { className: 'form-group' },
-              React.createElement(
-                'label',
-                { 'for': 'inputCity' },
-                'Email'
-              ),
-              React.createElement('input', { type: 'email', className: 'form-control', id: 'inputCity', placeholder: 'Email' })
-            ),
-            React.createElement(
-              'div',
-              { className: 'checkbox' },
-              React.createElement(
-                'label',
-                null,
-                React.createElement('input', { type: 'checkbox' }),
-                ' Remember me'
-              )
-            ),
-            React.createElement(
-              'button',
-              { type: 'submit', className: 'btn btn-primary' },
-              'Login'
-            )
-          )
-        )
-      );
+        return _possibleConstructorReturn(this, (Partner.__proto__ || Object.getPrototypeOf(Partner)).apply(this, arguments));
     }
-  }]);
 
-  return Partner;
+    _createClass(Partner, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                null,
+                React.createElement(_PageHeader2.default, null),
+                React.createElement(
+                    'form',
+                    null,
+                    React.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        React.createElement(
+                            'label',
+                            { 'for': 'inputName' },
+                            'Name'
+                        ),
+                        React.createElement('input', { type: 'text', className: 'form-control', id: 'inputName', placeholder: 'Name' })
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        React.createElement(
+                            'label',
+                            { 'for': 'inputCity' },
+                            'City'
+                        ),
+                        React.createElement('input', { type: 'text', className: 'form-control', id: 'inputCity', placeholder: 'City' })
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        React.createElement(
+                            'label',
+                            { 'for': 'inputState' },
+                            'State'
+                        ),
+                        React.createElement('input', { type: 'text', className: 'form-control', id: 'inputState', placeholder: 'State' })
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'form-group' },
+                        React.createElement(
+                            'label',
+                            { 'for': 'inputEmail' },
+                            'Email'
+                        ),
+                        React.createElement('input', { type: 'text', className: 'form-control', id: 'inputEmail', placeholder: 'Email' })
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'checkbox' },
+                        React.createElement(
+                            'label',
+                            null,
+                            React.createElement('input', { type: 'checkbox' }),
+                            ' Remember me'
+                        )
+                    ),
+                    React.createElement(
+                        'button',
+                        { type: 'submit', className: 'btn btn-primary' },
+                        'Login'
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Partner;
 }(React.Component);
 
 ;
