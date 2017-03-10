@@ -15,8 +15,10 @@ module.exports = function(app) {
 
         partner.name = req.body.name;
         partner.commfreq = req.body.commfreq;
+        comm.partner_rating = req.body.partner_rating;
         partner.city = req.body.city;
         partner.state = req.body.state;
+        partner.other = req.body.other;
         partner.primary_name = req.body.primary_name;
         partner.primary_phone = req.body.primary_phone;
         partner.primary_email = req.body.primary_email;
@@ -35,7 +37,26 @@ module.exports = function(app) {
         Partner.find(function(err, partners) {
             if (err)
                 res.send(err);
-
+            //Dummy data
+            partners = [
+                {
+                name: 'Coool Baptist Church',
+                healthIndex: 90,
+                lastContacted: 1
+                },{
+                name: 'First Baptist Church of Snoreville',
+                healthIndex: 63,
+                lastContacted: 17
+                },{
+                name: 'Church that we Should Ignore',
+                healthIndex: 31,
+                lastContacted: 46
+                },{
+                name: 'Best Church Eva',
+                healthIndex: 3,
+                lastContacted: 99
+                }
+            ]
             res.json(partners);
         });
     });
