@@ -23,9 +23,7 @@ module.exports = function(app) {
         partner.primary_phone = req.body.primary_phone;
         partner.primary_email = req.body.primary_email;
         partner.teammember = req.body.teammember;
-        partner.contact_date = req.body.contact_date;
-        partner.contact_type = req.body.contact_type;
-
+        partner.history =[];
         partner.save(function(err) {
             if (err) { res.send(err); }
             res.json({ message: 'Partner added!', data: partner });
@@ -40,21 +38,21 @@ module.exports = function(app) {
             //Dummy data
             partners = [
                 {
-                name: 'Coool Baptist Church',
-                healthIndex: 90,
-                lastContacted: 1
+                    name: 'Coool Baptist Church',
+                    healthIndex: 63,
+                    lastContacted: 1
                 },{
-                name: 'First Baptist Church of Snoreville',
-                healthIndex: 63,
-                lastContacted: 17
+                    name: 'First Baptist Church of Snoreville',
+                    healthIndex: 90,
+                    lastContacted: 17
                 },{
-                name: 'Church that we Should Ignore',
-                healthIndex: 31,
-                lastContacted: 46
+                    name: 'Church that we Should Ignore',
+                    healthIndex: 31,
+                    lastContacted: 46
                 },{
-                name: 'Best Church Eva',
-                healthIndex: 3,
-                lastContacted: 99
+                    name: 'Best Church Eva',
+                    healthIndex: 3,
+                    lastContacted: 99
                 }
             ]
             res.json(partners);
