@@ -15,7 +15,7 @@ const historySchema = new Schema({
 });
 
 const partnerSchema = new Schema({
-    name: { type: String, default: '' },
+    name: { type: String, default: '', require: true },
     commfreq: { type: Number, min: 0, default: 1 },
     date_created: {type: Date, default: Date.now},
     partner_rating: { type: Number, min: 0, default: 1 },

@@ -3,8 +3,91 @@
 const React = require('react');
 
 import PageHeader from '../../shared/PageHeader.jsx';
+import ChurchApi from '../../../api/ChurchApi.jsx';
+import CommFrequency from '../../../enums/CommFrequencyTypes.js';
 
 class Partner extends React.Component{
+  constructor() {
+    super();
+    this.state = {
+      partnerName: '',
+      address: '',
+      address2: '',
+      commFreq: null,
+      partnerRating: null,
+      city: '',
+      state: '',
+      contactName: '',
+      contactEmail: '',
+      contactPhone: ''
+    }
+  }
+
+  save() {
+    const freq = CommFrequency.indexOf(this.state.commFreq);
+    if(this.state.partnerName.length == 0) {
+      this.state.error = 'A partner name is required.';
+      this.setState(this.state);
+    } else {
+      ChurchApi.createPartner(this.state.partnerName, this.state.commFreq,
+        this.state.partnerRating, this.state.city, this.state.state,
+        this.state.contactName, this.state.contactEmail, this.state.contactPhone,
+        () => {
+          window.location="/";
+      });
+    }
+}
+
+  updatePartnerName(value) {
+    this.state.partnerName = value;
+    this.setState(this.state);
+  }
+
+    updateAddress1(value) {
+      this.state.address = value;
+      this.setState(this.state);
+    }
+
+      updateAddress2(value) {
+        this.state.address2 = value;
+        this.setState(this.state);
+      }
+updateRating(value){
+  this.state.partnerRating = value;
+  this.setState(this.state);
+}
+updateFreq(value){
+  this.state.commFreq = value;
+  this.setState(this.state);
+}
+      updateState(value) {
+        this.state.state = value;
+          this.setState(this.state);
+      }
+      updateCity(value) {
+        this.state.city = value;
+          this.setState(this.state);
+      }
+
+      updateContactName(value) {
+        this.state.contactName = value;
+          this.setState(this.state);
+      }
+
+      updateContactEmail(value) {
+        this.state.contactEmail = value;
+          this.setState(this.state);
+      }
+
+      updateContactPhone(value) {
+        this.state.contactPhone = value;
+          this.setState(this.state);
+      }
+
+  cancel() {
+    alert("reset");
+  }
+
   render() {
     return (
       <div>
@@ -21,23 +104,23 @@ class Partner extends React.Component{
                   <div className="panel-body">
                     <div className="form-group">
                       <label htmlFor="inputPartner" className="control-label">Name</label>
-                      <input type="text" className="form-control" id="inputPartner" placeholder="" required />
+                      <input value={this.state.partnerName} type="text" className="form-control" id="inputPartner" placeholder="" required onChange={(e) => this.updatePartnerName(e.target.value)}/>
                     </div>
                     <div className="form-group">
                       <label htmlFor="inputAddress" className="control-label">Street Address</label>
-                      <input type="text" className="form-control" id="inputAddress" placeholder="Street address, P.O. box, company name, c/o" />
+                      <input value={this.state.address} type="text" className="form-control" id="inputAddress" placeholder="Street address, P.O. box, company name, c/o" />
                     </div>
                     <div className="form-group">
                       <label htmlFor="inputStreet2" className="control-label" />
-                      <input type="text" className="form-control" id="inputStreet2" placeholder="Apartment, suite, unit, building, floor, etc." />
+                      <input value={this.state.address2} type="text" className="form-control" id="inputStreet2" placeholder="Apartment, suite, unit, building, floor, etc." />
                     </div>
                     <div className="form-group">
                       <label htmlFor="inputCity" className="control-label">City</label>
-                      <input type="text" className="form-control" id="inputCity" />
+                      <input value={this.state.city} type="text" className="form-control" id="inputCity" onChange={(e) => this.updateCity(e.target.value)} />
                     </div>
                     <div className="form-group">
                       <div className="form-group">
-                        <label htmlFor="state_id" className="control-label">State</label>
+                        <label htmlFor="state_id" className="control-label" onChange={(e) => this.updateState(e.target.value)}>State</label>
                         <select className="select form-control" id="state_id" placeholder="State">
                           <option value="NA">Other</option>
                           <option value="AL">Alabama</option>
@@ -104,19 +187,15 @@ class Partner extends React.Component{
                   <div className="panel-body">
                     <div className="form-group">
                       <label htmlFor="inputContact" className="control-label">Name</label>
-                      <input type="text" className="form-control" id="inputContact" />
-                     </div>
-                     <div className="form-group">
-                      <label htmlFor="inputContact" className="control-label">Pimary Contact</label>
-                      <input type="text" className="form-control" id="inputContact" />
+                      <input value={this.state.contactName} type="text" className="form-control" id="inputContact" onChange={(e) => this.updateContactName(e.target.value)}/>
                      </div>
                      <div className="form-group">
                       <label htmlFor="inputEmail" className="control-label">Email</label>
-                      <input type="email" className="form-control" id="inputEmail" />
+                      <input value={this.state.contactEmail} type="email" className="form-control" id="inputEmail" onChange={(e) => this.updateContactEmail(e.target.value)}/>
                      </div>
                      <div className="form-group">
                       <label htmlFor="inputPhone" className="control-label">Phone</label>
-                      <input type="phone" className="form-control" id="inputPhone" />
+                      <input value={this.state.contactPhone} type="phone" className="form-control" id="inputPhone" onChange={(e) => this.updateContactPhone(e.target.value)}/>
                     </div>
                   </div>
                 </div>
@@ -125,24 +204,8 @@ class Partner extends React.Component{
           <div className="form-group">
             <label className="control-label" />
             <div className="text-left">
-              <div
-                id="buttonAddGroup"
-                className="btn-group"
-                role="group"
-                aria-label>
-                <button
-                  type="submit"
-                  id="buttonAdd"
-                  name="buttonAdd"
-                  className="btn btn-primary"
-                  aria-label="Add">Add</button>
-                <button
-                  type="reset"
-                  id="buttonCancel"
-                  name="buttonCancel"
-                  className="btn btn-danger"
-                  aria-label="Reset">Cancel</button>
-              </div>
+              <button className='btn btn-primary' style={{'marginRight': '10px'}} onClick={() => this.save()}>Add</button>
+              <button className='btn btn-danger' onClick={() => this.cancel()}>Cancel</button>
             </div>
           </div>
           </form>
