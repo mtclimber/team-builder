@@ -68,9 +68,19 @@ module.exports = function(app) {
     memberRoute.delete(function(req, res) {
         Member.findByIdAndRemove(req.params.member_id, function(err) {
             if (err)
-                res.send(err);
+                return res.send(err);
             
             res.send('success');
+        })
+    });
+
+    const usernameRoute = router.route('/members/byusername/:username');
+    usernameRoute.get(function(req, res) {
+        Member.findByUsername(req.params.username, function(err, response) {
+            if (err)
+                return res.send(err);
+                
+            res.json(response);
         })
     });
 };

@@ -10,6 +10,8 @@ const CreateMember = require('./components/pages/CreateMember/CreateMember.jsx')
 const routes = (
   <Router history={browserHistory}>
     <Route path="/" component={ChurchViewer} />
+    <Route path="/partnerships" component={ChurchViewer} />
+    <Route path="/partnerships/:username" component={ChurchViewer} />
     <Route path="/partner" component={Partner} />
     <Route path="/report" component={Report} />
     <Route path="/login" component={Login} />

@@ -22,6 +22,16 @@ class Church {
     });
   };
 
+  static getChartData(memberId, cb) {
+    $.get(`/api/partners/chart/` + memberId)
+    .done((response) => {
+      cb(response);
+    })
+    .fail((response) => {
+      cb(response);
+    });
+  }
+
   static createPartner(name, commFreq, partnerRating, city, state, pc_name, pc_phone, pc_email, cb) {
     $.post(`/api/partners`, {
       name: name,

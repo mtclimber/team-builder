@@ -37,10 +37,7 @@ class Churches extends React.Component{
         </div>
         <div className='row'>
           {this.props.churches.map((church) => {
-            console.log(church.partner.teammember);
-            console.log(config.loggedInId);
-            console.log('end');
-            if(church.partner.teammember === config.loggedInId && (this.state.focused === null || this.state.focused === church.partner.name))
+            if(church.partner.teammember === this.props.focusedMember && (this.state.focused === null || this.state.focused === church.partner.name))
             return (
               <div key={church.partner.name} className={churchRowClasses} style={churchRowStyle} >
                 <Church partnerRating={church.partner.partner_rating} id={church.partner._id} name={church.partner.name} healthIndex={church.healthIndex} lastContacted={church.lastContacted} setFocused={(name) => this.setFocused(name)}/>

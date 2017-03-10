@@ -56,7 +56,7 @@ getHealthIndex = function(partner) {
     return calc(health, lastDate, now, 0, multiplier);
 }
 
-getChurchData = function(memberId, data, churches, members) {
+getChurchData = function(memberId, data, churches, members, recursive) {
     var filtered = [];
     
     for(var i = 0; i < churches.length; i++) {
@@ -76,36 +76,47 @@ getChurchData = function(memberId, data, churches, members) {
             data.mad += 1;
     }
     
-    var validMembers = _.filter(members, {'leader': memberId.toString()});
-    for(var i = 0; i < validMembers.length; i++) {
-        data = getChurchData(validMembers[i]._id, data, churches, members);
+    if(recursive === true) {
+        var validMembers = _.filter(members, {'leader': memberId.toString()});
+        if(validMembers.length > 0)
+            data.hasTeamMembers = true;
+            
+        for(var i = 0; i < validMembers.length; i++) {
+            data = getChurchData(validMembers[i]._id, data, churches, members);
+        }
     }
+
     return data;
 }
 
 
-getChurchDataFromLeader = function(teamId, cb) {
-    Team.findById(teamId, (err, team) => {
-        Member.find((err, allMembers) => {
+getChurchDataFromLeader = function(memberId, cb) {
+    Member.findById(memberId, (err, member) => {
+        Member.find((err, allMembers) => {  
             Partner.find((err, allPartners) => {
                 
             var dataPoints = [];
-            var tls = _.filter(allMembers, {'leader': team.leader.toString()});
+            var tls = _.filter(allMembers, {'leader': memberId.toString()});
+            tls.push(member);
+            console.log(tls);
             for(var i = 0; i < tls.length; i++) {
                 var uids = getChurchData(tls[i]._id, {
                     name: tls[i].username,
+                    id: tls[i]._id,
+                    hasTeamMembers: false,
                     great: 0,
                     good: 0,
                     sad: 0,
                     mad: 0
-                }, allPartners, allMembers);
+                }, allPartners, allMembers, i !== tls.length - 1);
                 dataPoints.push(uids);
             }
-                
+             
                 cb(dataPoints);
             })
         });
     })
+        
 }
 
 module.exports = function(app) {
@@ -230,10 +241,10 @@ module.exports = function(app) {
         });
     });
 
-    const chartRoute = router.route('/partners/chart/:team_id');
+    const chartRoute = router.route('/partners/chart/:member_id');
 
     chartRoute.get(function(req, res) {
-        getChurchDataFromLeader(req.params.team_id, (response) => {
+        getChurchDataFromLeader(req.params.member_id, (response) => {
             res.json(response);
         })
     });

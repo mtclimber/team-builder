@@ -33,7 +33,6 @@ class ChurchOverview extends React.Component {
 
   getDaysAgoText() {
     const days = this.props.lastContacted;
-    console.log(days);
     if(days === 1)
       return `${days} day ago`;
 

@@ -48,7 +48,8 @@ class HappinessChart extends React.Component{
         'sad': 'orange',
         'good': 'blue',
         'great': 'green'
-      }
+      },
+      onclick: (e) => {this.props.clicked(e.index);}
     },
     axis: {
         x: {
