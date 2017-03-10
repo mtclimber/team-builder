@@ -17,11 +17,15 @@ getLeader = function(teamName, cb) {
 module.exports = function(app) {
     const express = require('express');
     const passport = require('passport');
+    const LocalStrategy = require('passport-local').Strategy;
     const router = express.Router();
 
     app.use('/api', router);
 
     const Member = require('./../models/member');
+    passport.use(new LocalStrategy(Member.authenticate()));
+    passport.serializeUser(Member.serializeUser());
+    passport.deserializeUser(Member.deserializeUser());
 
     const registerRoute = router.route('/auth/register');
 
@@ -61,16 +65,29 @@ module.exports = function(app) {
 
     const loginRoute = router.route('/auth/login');
 
-    loginRoute.post(function(req, res) {
-        passport.authenticate('local');
-        res.json({ message: 'User authenticated!' });
+    loginRoute.post(passport.authenticate('local', { failureRedirect: '/login' }),
+    function(req, res) {
+      res.redirect('/');
     });
 
     const logoutRoute = router.route('/auth/logout');
 
-    logoutRoute.post(function(req, res) {
-        req.logout();
-        res.json({ message: 'Logout successful!' });
+    logoutRoute.get(function(req, res) {
+      req.logout();
+      res.redirect('/login');
+    });
+
+    const getUserRoute = router.route('/auth/loggedInUser');
+    getUserRoute.get(function(req, res) {
+        console.log(req.session);
+        if(req.session.passport === undefined)
+            return res.json(null);
+
+        const user = req.session.passport.user;
+        console.log(user);
+        Member.findByUsername(user, (err, response) => {
+            res.json(response);
+        });
     });
 
 };

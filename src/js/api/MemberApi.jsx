@@ -26,6 +26,19 @@ class Member {
       cb(response);
     });
   };
+
+  static login(username, password, cb) {
+    $.post('/api/auth/login', {
+      username: username,
+      password: password
+    })
+    .done((response) => {
+      cb({err: false, response: response});
+    })
+    .fail((response) => {
+      cb({err: true});
+    });
+  }
 };
 
 module.exports = Member;

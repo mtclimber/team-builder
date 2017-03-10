@@ -1,5 +1,12 @@
 var moment = require('moment');
 var config = require('../../lib/config.js');
+const Partner = require('./../models/partner');
+const Team = require('./../models/team');
+const Member = require('./../models/member');
+var _ = require('lodash');  
+getRandom = function(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 
 createPartnerToReturn = function(partner) {
     return {
@@ -49,6 +56,58 @@ getHealthIndex = function(partner) {
     return calc(health, lastDate, now, 0, multiplier);
 }
 
+getChurchData = function(memberId, data, churches, members) {
+    var filtered = [];
+    
+    for(var i = 0; i < churches.length; i++) {
+        if(churches[i].teammember.toString() === memberId.toString())
+            filtered.push(churches[i]);
+    }
+
+    for(var i = 0; i < filtered.length; i++) {
+        rating = getHealthIndex(filtered[i]);
+        if(rating >= 90)
+            data.great += 1;
+        else if(rating >= 50)
+            data.good += 1;
+        else if(rating >= 25)
+            data.sad += 1;
+        else if(rating >= 0)
+            data.mad += 1;
+    }
+    
+    var validMembers = _.filter(members, {'leader': memberId.toString()});
+    for(var i = 0; i < validMembers.length; i++) {
+        data = getChurchData(validMembers[i]._id, data, churches, members);
+    }
+    return data;
+}
+
+
+getChurchDataFromLeader = function(teamId, cb) {
+    Team.findById(teamId, (err, team) => {
+        Member.find((err, allMembers) => {
+            Partner.find((err, allPartners) => {
+                
+            var dataPoints = [];
+            var tls = _.filter(allMembers, {'leader': team.leader.toString()});
+            for(var i = 0; i < tls.length; i++) {
+                var uids = getChurchData(tls[i]._id, {
+                    name: tls[i].username,
+                    great: 0,
+                    good: 0,
+                    sad: 0,
+                    mad: 0
+                }, allPartners, allMembers);
+                dataPoints.push(uids);
+            }
+                
+                cb(dataPoints);
+            })
+        });
+    })
+}
+
 module.exports = function(app) {
 
     const express = require('express');
@@ -56,7 +115,6 @@ module.exports = function(app) {
 
     app.use('/api', router);
 
-    const Partner = require('./../models/partner');
 
     const partnersRoute = router.route('/partners');
 
@@ -64,14 +122,27 @@ module.exports = function(app) {
         const partner = new Partner();
 
         partner.name = req.body.name;
-        partner.commfreq = req.body.commfreq;
-        partner.partner_rating = req.body.partner_rating;
-        partner.city = req.body.city;
-        partner.state = req.body.state;
-        partner.primary_name = req.body.primary_name;
-        partner.primary_phone = req.body.primary_phone;
-        partner.primary_email = req.body.primary_email;
-        partner.teammember = req.body.teammember;
+        // partner.commfreq = req.body.commfreq;
+        partner.commfreq = getRandom(2, 0);
+        // partner.partner_rating = req.body.partner_rating;
+        partner.partner_rating = getRandom(5, 1);
+        partner.city = "Bristow";
+        partner.state = "Oklahoma";
+        partner.primary_name = "Ryan Tankersley";
+        partner.primary_phone = "918-555-5555";
+        partner.primary_email = "asdf@gmail.com";
+
+        const ids = [
+            "58c2c6f054072335e00c5977",
+            "58c2cc5754a43c3e9c4bebfe",
+            "58c2cd0454a43c3e9c4bec00",
+            "58c2cd8754a43c3e9c4bec01",
+            "58c2ce1754a43c3e9c4bec03"
+        ]
+
+        partner.teammember = ids[getRandom(5, 0)];
+        partner.date_created = moment().subtract('days', getRandom(200, 1)).toISOString();
+
         partner.history =[];
         partner.save(function(err) {
             if (err) { console.log(err); return res.send(err); }
@@ -84,26 +155,6 @@ module.exports = function(app) {
         Partner.find(function(err, partners) {
             if (err)
                 res.send(err);
-            //Dummy data
-            // partners = [
-            //     {
-            //         name: 'Coool Baptist Church',
-            //         healthIndex: 63,
-            //         lastContacted: 1
-            //     },{
-            //         name: 'First Baptist Church of Snoreville',
-            //         healthIndex: 90,
-            //         lastContacted: 17
-            //     },{
-            //         name: 'Church that we Should Ignore',
-            //         healthIndex: 31,
-            //         lastContacted: 46
-            //     },{
-            //         name: 'Best Church Eva',
-            //         healthIndex: 3,
-            //         lastContacted: 99
-            //     }
-            // ]
 
             partners = partners.map((partner) => {
                 return createPartnerToReturn(partner);
@@ -179,4 +230,11 @@ module.exports = function(app) {
         });
     });
 
+    const chartRoute = router.route('/partners/chart/:team_id');
+
+    chartRoute.get(function(req, res) {
+        getChurchDataFromLeader(req.params.team_id, (response) => {
+            res.json(response);
+        })
+    });
 };
