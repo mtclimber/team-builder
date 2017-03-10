@@ -1,0 +1,21 @@
+{
+    "name": "Cool Church",
+    "commfreq": 1,
+    "address": {
+        "city": "Huntington Beach",
+        "state": "CA"
+    },
+    "primarycontact": {
+        "name": "John Doe",
+        "phone": "(555) 555-1212",
+        "email": "john@example.com"
+    },
+    "teammember": [
+        ID
+    ],
+    "contact": {
+        "date": "",
+        "type": ""
+    },
+    "datecreated": "time"
+}
