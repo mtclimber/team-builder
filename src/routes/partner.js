@@ -1,3 +1,58 @@
+var moment = require('moment');
+var config = require('../../lib/config.js');
+
+createPartnerToReturn = function(partner) {
+    return {
+         partner: partner,
+         lastContacted: getLastDayContacted(partner),
+         healthIndex: getHealthIndex(partner)
+         //healthIndex: Math.floor(Math.random() * (100 - 1))
+     }
+}
+
+getLastDayContacted = function(partner) {
+    var date = partner.date_created;
+    if(partner.history.length > 0)
+        date = partner.history[partner.history.length - 1].date;
+    var now = moment();
+    var md = moment(date);
+
+    return now.diff(md, 'days');
+}
+
+calc = function(health, lastDate, currentDate, historyItemValue, multiplier) {
+    days = currentDate.diff(lastDate, 'days');
+    console.log(days);
+    console.log(multiplier);
+    health -= days * multiplier;
+    if(health < 0)
+        health = 0;
+    
+    health += historyItemValue;
+    if(health > 100)
+        health = 100;
+    
+    console.log('health');
+    console.log(health);
+    return health;
+}
+
+getHealthIndex = function(partner) {
+    var now = moment();
+    var lastDate = moment(partner.date_created);
+    var multiplier = config.damagePerDay[`${partner.commfreq}`];
+    var health = 100;
+
+    for(var i = 0; i < partner.history.length; i++) {
+        console.log(partner);
+        var val = config.contactValue[`${partner.history[i].audience_type}`][`${partner.history[i].interaction_type}`];
+        health = calc(health, lastDate, moment(partner.history[i].date), val, multiplier);
+        lastDate = moment(partner.history[i].date);
+    }
+
+    return calc(health, lastDate, now, 0, multiplier);
+}
+
 module.exports = function(app) {
 
     const express = require('express');
@@ -53,6 +108,11 @@ module.exports = function(app) {
             //         lastContacted: 99
             //     }
             // ]
+
+            partners = partners.map((partner) => {
+                return createPartnerToReturn(partner);
+            })
+
             res.json(partners);
         });
     });
@@ -65,7 +125,10 @@ module.exports = function(app) {
             if (err)
                 res.send(err);
 
-            res.json(partner);
+            if(partner === null)
+                res.send({});
+
+            res.json(createPartnerToReturn(partner));
         });
     });
 
@@ -86,6 +149,15 @@ module.exports = function(app) {
                 res.json(partner);
             });
         });
+    });
+
+    partnerRoute.delete(function(req, res) {
+        Partner.findByIdAndRemove(req.params.partner_id, function(err) {
+            if (err)
+                res.send(err);
+            
+            res.send('success');
+        })
     });
 
     const historyRoute = router.route('/history/:partner_id');
@@ -110,4 +182,5 @@ module.exports = function(app) {
             });
         });
     });
+
 };

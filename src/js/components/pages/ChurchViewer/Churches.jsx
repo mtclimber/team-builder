@@ -37,10 +37,10 @@ class Churches extends React.Component{
         </div>
         <div className='row'>
           {this.props.churches.map((church) => {
-            if(this.state.focused === null || this.state.focused === church.name)
+            if(this.state.focused === null || this.state.focused === church.partner.name)
             return (
-              <div key={church.name} className={churchRowClasses} style={churchRowStyle} >
-                <Church id={church._id} name={church.name} healthIndex={church.healthIndex} lastContacted={church.lastContacted} setFocused={(name) => this.setFocused(name)}/>
+              <div key={church.partner.name} className={churchRowClasses} style={churchRowStyle} >
+                <Church id={church.partner._id} name={church.partner.name} healthIndex={church.healthIndex} lastContacted={church.lastContacted} setFocused={(name) => this.setFocused(name)}/>
               </div>
             );
           })}
