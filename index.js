@@ -37,6 +37,7 @@ mongoose.connect(config.database);
 require('./src/routes/team')(app);
 require('./src/routes/partner')(app);
 require('./src/routes/member')(app);
+require('./src/routes/auth')(app);
 
 app.get('/*', (req, res) => {
     const file = __dirname + '/index.html';
