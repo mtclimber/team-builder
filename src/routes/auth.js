@@ -1,5 +1,20 @@
-module.exports = function(app) {
+const Team = require('./../models/team');
+getLeader = function(teamName, cb) {
+    if(teamName === 'None') {
+        return cb({err: false, val: ''});
+    }
 
+    Team.find({'name': teamName}, (err, response) => {
+        if(err) {
+            return cb({err: true});
+        }
+
+        console.log(response);
+        return cb({err: false, val: response[0].leader});
+    });
+}
+
+module.exports = function(app) {
     const express = require('express');
     const passport = require('passport');
     const router = express.Router();
@@ -11,14 +26,35 @@ module.exports = function(app) {
     const registerRoute = router.route('/auth/register');
 
     registerRoute.post(function(req, res) {
+        getLeader(req.body.teamName, (response) => {
+            if(response.err)
+                res.send(response);
+            
+            var mem = new Member({name: req.body.name, username : req.body.username, leader: response.val });
+            console.log(mem);
+             Member.register(mem, 'thisisatestpassword', function(err, account) {
+                if (err) {
+                    console.log(err);
+                    return res.send(err);
+                }
 
-        Member.register(new Member({ username : req.body.username }), req.body.password, function(err, account) {
-            if (err) {
-                res.send(err);
-            }
+                var lt = req.body.leadingTeamName;
+                if(lt !== null && lt !== undefined && lt !== '') {
+                    console.log(account);
+                    const team = new Team();
+                    team.name = lt;
+                    team.leader = account._id;
+                    team.save(function(err) {
+                        if(err) {
+                            console.log('Oh crap! We didn\'t handle this...');
+                            console.log(err);
+                        }
+                    });
+                }
 
-            passport.authenticate('local')(req, res, function () {
-                res.json({ message: 'User registered!' });
+                passport.authenticate('local')(req, res, function () {
+                    res.json({ message: 'User registered!' });
+                });
             });
         });
     });

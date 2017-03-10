@@ -5,7 +5,6 @@ var mongoose = require('mongoose'),
 const memberSchema = new Schema({
     name: { type: String, default: '' },
     leader: { type: String, default: '' },
-    id: { type: String, default: '' },
     username: String,
     password: String
 });

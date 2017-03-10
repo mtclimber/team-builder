@@ -5,6 +5,7 @@ const Partner = require('./components/pages/Partner/Partner.jsx');
 const Report = require('./components/pages/Report/Report.jsx');
 const Registration = require('./components/pages/Registration/Registration.jsx');
 const DetailsPage = require('./components/pages/PartnerDetails/DetailsPage.jsx');
+const CreateMember = require('./components/pages/CreateMember/CreateMember.jsx');
 
 const routes = (
   <Router history={browserHistory}>
@@ -12,6 +13,7 @@ const routes = (
     <Route path="/partner" component={Partner} />
     <Route path="/report" component={Report} />
     <Route path="/register" component={Registration} />
+    <Route path="/create-member" component={CreateMember} />
     <Route path="/details/:partnerId" component={DetailsPage} />
   </Router>
 );

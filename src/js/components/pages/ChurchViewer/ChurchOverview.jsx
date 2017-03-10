@@ -47,6 +47,7 @@ class ChurchOverview extends React.Component {
 
   render() {
     const churchSize = '75px';
+
     return (
       <div style={{'textAlign': 'center'}}>
         <img style={{'height': churchSize, 'width': churchSize}} src={`/images/${this.getImageSource()}.png`} />

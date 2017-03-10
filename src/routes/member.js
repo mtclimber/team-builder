@@ -17,10 +17,10 @@ module.exports = function(app) {
         member.leader = req.body.leader;
         member.id = req.body.leader;
 
-        member.save(function(err) {
-            if (err) { res.send(err); }
-            res.json({ message: 'Member added!', data: member });
-        });
+        // member.save(function(err) {
+        //     if (err) { res.send(err); }
+        //     res.json({ message: 'Member added!', data: member });
+        // });
     });
 
     membersRoute.get(function(req, res) {
@@ -65,4 +65,12 @@ module.exports = function(app) {
         });
     });
 
+    memberRoute.delete(function(req, res) {
+        Member.findByIdAndRemove(req.params.member_id, function(err) {
+            if (err)
+                res.send(err);
+            
+            res.send('success');
+        })
+    });
 };

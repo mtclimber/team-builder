@@ -63,4 +63,12 @@ module.exports = function(app) {
         });
     });
 
+    teamRoute.delete(function(req, res) {
+        Team.findByIdAndRemove(req.params.team_id, function(err) {
+            if (err)
+                res.send(err);
+            
+            res.send('success');
+        })
+    });
 };
