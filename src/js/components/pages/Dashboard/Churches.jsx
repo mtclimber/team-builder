@@ -19,15 +19,19 @@ class Churches extends React.Component{
   }
 
   render() {
-    const churchRowClasses = 'col-xs-12 col-sm-6 col-md-4 col-lg-3';
+    let churchRowClasses = 'col-xs-12 col-sm-6 col-md-4 col-lg-3';
     let churchRowStyle = {
       'marginBottom': '10px'
     };
+
+    if(this.state.focused !== null)
+      churchRowClasses = 'col-xs-12 col-sm-12 col-md-8 col-lg-8';
 
     return (
       <div>
         <div className='row'>
           <div className='col-xs-12' style={{'marginBottom': '10px'}}>
+            <h1 style={{'marginBottom': '0px 0px 15px 0px'}}>Partnerships</h1>
             <Link to='/partner' className='btn btn-success'>Add Partner</Link>
           </div>
         </div>
