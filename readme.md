@@ -29,3 +29,10 @@ POST /api/partners/
 GET /api/partners/:partner_id
 PUT /api/partners/:partner_id
 ```
+
+**Authentication**
+```
+POST /api/auth/register
+POST /api/auth/login
+POST /api/logout
+```
