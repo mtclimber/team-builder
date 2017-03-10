@@ -5,6 +5,7 @@ const React = require('react');
 import PageHeader from '../../shared/PageHeader.jsx';
 import ChurchApi from '../../../api/ChurchApi.jsx';
 import CommFrequency from '../../../enums/CommFrequencyTypes.js';
+import States from '../../../enums/States.js'
 import Rater from 'react-rater'
 
 class Partner extends React.Component{
@@ -14,13 +15,14 @@ class Partner extends React.Component{
       partnerName: '',
       address: '',
       address2: '',
-      commFreq: null,
-      partnerRating: 5,
+      commFreq: 'Moderate',
+      partnerRating: 3,
       city: '',
-      state: '',
+      state: 'N/A',
       contactName: '',
       contactEmail: '',
-      contactPhone: ''
+      contactPhone: '',
+      error: ''
     }
   }
 
@@ -53,15 +55,14 @@ class Partner extends React.Component{
         this.state.address2 = value;
         this.setState(this.state);
       }
-updateRating(value){
-  console.log(value);
-  this.state.partnerRating = Number(value);
-  this.setState(this.state);
-}
-updateFreq(value){
-  this.state.commFreq = value;
-  this.setState(this.state);
-}
+      updateRating(value){
+        this.state.partnerRating = Number(value);
+        this.setState(this.state);
+      }
+      updateFreq(value){
+        this.state.commFreq = value;
+        this.setState(this.state);
+      }
       updateState(value) {
         this.state.state = value;
           this.setState(this.state);
@@ -87,7 +88,7 @@ updateFreq(value){
       }
 
   cancel() {
-    alert("reset");
+    window.location = "/";
   }
 
   render() {
@@ -101,85 +102,45 @@ updateFreq(value){
                 <div className="panel panel-default">
                   <div className="panel-heading clearfix">
                     <i className="icon-calendar" />
-                    <h3 className="panel-title">Partner Information                      <Rater interactive={true} rating={this.state.partnerRating} onRate={(e) => this.updateRating(e.rating)} />
-</h3>
-
+                    <h3 className="panel-title">Partner Information <Rater interactive={true} rating={this.state.partnerRating} onRate={(e) => this.updateRating(e.rating)} /></h3>
                   </div>
-
                   <div className="panel-body">
                     <div className="form-group">
                       <label htmlFor="inputPartner" className="control-label">Name</label>
                       <input value={this.state.partnerName} type="text" className="form-control" id="inputPartner" placeholder="" required onChange={(e) => this.updatePartnerName(e.target.value)}/>
                     </div>
                     <div className="form-group">
-                      <label className="control-label">Rating</label>
+                      <label htmlFor="inputFreq" className="control-label">Communication Frequency</label>
+                      <select className="select form-control" id="inputFreq" placeholder="Frequency" onChange={(e) => this.updateFreq(e.target.value)}>
+                          {CommFrequency.map((item) => {
+                            var selected = false;
+                            if(item === this.state.commFreq)
+                                selected = true;
+                            return (
+                              <option value={item} selected={selected} key={item}>{item}</option>
+                            )
+                          })}
+                      </select>
                     </div>
                     <div className="form-group">
                       <label htmlFor="inputCity" className="control-label">City</label>
                       <input value={this.state.city} type="text" className="form-control" id="inputCity" onChange={(e) => this.updateCity(e.target.value)} />
                     </div>
                       <div className="form-group">
-                        <label htmlFor="state_id" className="control-label" onChange={(e) => this.updateState(e.target.value)}>State</label>
-                        <select className="select form-control" id="state_id" placeholder="State">
-                          <option value="NA">Other</option>
-                          <option value="AL">Alabama</option>
-                          <option value="AK">Alaska</option>
-                          <option value="AZ">Arizona</option>
-                          <option value="AR">Arkansas</option>
-                          <option value="CA">California</option>
-                          <option value="CO">Colorado</option>
-                          <option value="CT">Connecticut</option>
-                          <option value="DE">Delaware</option>
-                          <option value="DC">District Of Columbia</option>
-                          <option value="FL">Florida</option>
-                          <option value="GA">Georgia</option>
-                          <option value="HI">Hawaii</option>
-                          <option value="ID">Idaho</option>
-                          <option value="IL">Illinois</option>
-                          <option value="IN">Indiana</option>
-                          <option value="IA">Iowa</option>
-                          <option value="KS">Kansas</option>
-                          <option value="KY">Kentucky</option>
-                          <option value="LA">Louisiana</option>
-                          <option value="ME">Maine</option>
-                          <option value="MD">Maryland</option>
-                          <option value="MA">Massachusetts</option>
-                          <option value="MI">Michigan</option>
-                          <option value="MN">Minnesota</option>
-                          <option value="MS">Mississippi</option>
-                          <option value="MO">Missouri</option>
-                          <option value="MT">Montana</option>
-                          <option value="NE">Nebraska</option>
-                          <option value="NV">Nevada</option>
-                          <option value="NH">New Hampshire</option>
-                          <option value="NJ">New Jersey</option>
-                          <option value="NM">New Mexico</option>
-                          <option value="NY">New York</option>
-                          <option value="NC">North Carolina</option>
-                          <option value="ND">North Dakota</option>
-                          <option value="OH">Ohio</option>
-                          <option value="OK">Oklahoma</option>
-                          <option value="OR">Oregon</option>
-                          <option value="PA">Pennsylvania</option>
-                          <option value="RI">Rhode Island</option>
-                          <option value="SC">South Carolina</option>
-                          <option value="SD">South Dakota</option>
-                          <option value="TN">Tennessee</option>
-                          <option value="TX">Texas</option>
-                          <option value="UT">Utah</option>
-                          <option value="VT">Vermont</option>
-                          <option value="VA">Virginia</option>
-                          <option value="WA">Washington</option>
-                          <option value="WV">West Virginia</option>
-                          <option value="WI">Wisconsin</option>
-                          <option value="WY">Wyoming</option>
+                        <label htmlFor="state_id" className="control-label">State</label>
+                        <select className="select form-control" id="state_id" placeholder="State" value={this.state.state} onChange={(e) => this.updateState(e.target.value)}>
+                          {States.map((item) => {
+                            var selected = false;
+                            if(item === this.state.state)
+                                selected = true;
+                            return (
+                              <option value={item} selected={selected} key={item}>{item}</option>
+                            )
+                          })}
                         </select>
                     </div>
                   </div>
-                </div>
-                <div className="panel panel-default">
                   <div className="panel-heading clearfix">
-                    <i className="icon-calendar" />
                     <h3 className="panel-title">Primary Contact</h3>
                   </div>
                   <div className="panel-body">
@@ -202,6 +163,7 @@ updateFreq(value){
           <div className="form-group">
             <label className="control-label" />
             <div className="text-left">
+              <p className='text-danger'>{this.state.error}</p>
               <button className='btn btn-primary' style={{'marginRight': '10px'}} onClick={() => this.save()}>Add</button>
               <button className='btn btn-danger' onClick={() => this.cancel()}>Cancel</button>
             </div>
