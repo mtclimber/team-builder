@@ -2,11 +2,12 @@
 
 const React = require('react');
 import {Link} from 'react-router';
+import Rater from 'react-rater'
 
 class ChurchOverview extends React.Component {
   getProgressBar() {
     var healthIndex = Number(this.props.healthIndex);
-    
+
     if(healthIndex >= 90)
       return "success";
     else if(healthIndex >= 50)
@@ -35,7 +36,7 @@ class ChurchOverview extends React.Component {
     console.log(days);
     if(days === 1)
       return `${days} day ago`;
-      
+
     if(days === 0)
       return 'Today';
     return `${days} days ago`;
@@ -49,6 +50,9 @@ class ChurchOverview extends React.Component {
     const churchSize = '75px';
     return (
       <div style={{'textAlign': 'center'}}>
+        <div>
+        <Rater interactive={false} rating={this.props.partnerRating} />
+        </div>
         <img style={{'height': churchSize, 'width': churchSize}} src={`/images/${this.getImageSource()}.png`} />
         <div className="progress" style={{'margin': '10px auto 15px auto'}}>
           <div className={`progress-bar progress-bar-${this.getProgressBar()}`} role="progressbar" aria-valuenow={this.props.healthIndex} aria-valuemin="0" aria-valuemax="100" style={{'width': `${this.props.healthIndex}%`}}>
