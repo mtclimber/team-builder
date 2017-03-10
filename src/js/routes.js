@@ -4,6 +4,7 @@ const ChurchViewer = require('./components/pages/ChurchViewer/ChurchViewer.jsx')
 const Partner = require('./components/pages/Partner/Partner.jsx');
 const Report = require('./components/pages/Report/Report.jsx');
 const Registration = require('./components/pages/Registration/Registration.jsx');
+const DetailsPage = require('./components/pages/PartnerDetails/DetailsPage.jsx');
 
 const routes = (
   <Router history={browserHistory}>
@@ -11,6 +12,7 @@ const routes = (
     <Route path="/partner" component={Partner} />
     <Route path="/report" component={Report} />
     <Route path="/register" component={Registration} />
+    <Route path="/details/:partnerId" component={DetailsPage} />
   </Router>
 );
 

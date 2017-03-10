@@ -43,7 +43,7 @@ class BackCard extends React.Component{
           error: ''
         }
 
-        this.setState(state);
+        this.setState(this.state);
       });
     }
   }
@@ -131,7 +131,7 @@ class Church extends React.Component{
       <div className={flipclass}>
         <div className="flipper">
           <div className="front">
-            <ChurchOverview name={this.props.name} healthIndex={this.props.healthIndex} lastContacted={this.props.lastContacted} flipCard={(flipped) => this.flipCard(flipped)} />
+            <ChurchOverview id={this.props.id} name={this.props.name} healthIndex={this.props.healthIndex} lastContacted={this.props.lastContacted} flipCard={(flipped) => this.flipCard(flipped)} />
           </div>
           <div className="back">
             <BackCard id={this.props.id} name={this.props.name} flipCard={(flipped) => this.flipCard(flipped)} />

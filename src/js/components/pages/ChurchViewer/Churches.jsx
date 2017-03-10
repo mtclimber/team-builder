@@ -37,6 +37,7 @@ class Churches extends React.Component{
         </div>
         <div className='row'>
           {this.props.churches.map((church) => {
+            console.log(church.healthIndex);
             if(this.state.focused === null || this.state.focused === church.partner.name)
             return (
               <div key={church.partner.name} className={churchRowClasses} style={churchRowStyle} >

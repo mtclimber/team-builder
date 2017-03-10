@@ -1,6 +1,7 @@
 'use strict';
 
 const React = require('react');
+import {Link} from 'react-router';
 
 class ChurchOverview extends React.Component {
   getProgressBar() {
@@ -54,6 +55,7 @@ class ChurchOverview extends React.Component {
         <p className='church-title'>{this.props.name}</p>
         <div style={{'position': 'absolute', 'bottom': '10px', 'left': '0px', 'width': '100%'}}>
           <button className='btn btn-primary' style={{'float': 'left', 'marginLeft': '10px'}} onClick={() => this.contact()}>Report Contact</button>
+          <Link to={'details/' + this.props.id} className='btn btn-primary' style={{'float': 'left', 'marginLeft': '10px'}}>Details</Link>
           <p style={{'marginTop': '6px', 'float': 'right', 'marginRight': '10px'}}>{this.getDaysAgoText()}</p>
         </div>
       </div>

@@ -123,10 +123,12 @@ module.exports = function(app) {
 
         Partner.findById(req.params.partner_id, function(err, partner) {
             if (err)
-                res.send(err);
+                return res.send(err);
 
-            if(partner === null)
-                res.send({});
+            if(partner === undefined || partner === null)  {
+                res.send({'message': 'Partner was not found.'});
+                return;
+            }
 
             res.json(createPartnerToReturn(partner));
         });
@@ -139,9 +141,8 @@ module.exports = function(app) {
             if (err)
                 res.send(err);
 
-            partner.name = req.body.name;
-            partner.leader = req.body.leader;
-
+            //partner.date_created = moment().subtract(150, 'days').toISOString();
+            partner.commfreq = 1;
             partner.save(function(err) {
                 if (err)
                     res.send(err);
