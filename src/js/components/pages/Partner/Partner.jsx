@@ -32,7 +32,8 @@ class Partner extends React.Component{
       this.state.error = 'A partner name is required.';
       this.setState(this.state);
     } else {
-      ChurchApi.createPartner(this.state.partnerName, this.state.commFreq,
+      var comFreqIndex = CommFrequency.indexOf(this.state.commFreq);
+      ChurchApi.createPartner(this.state.partnerName, comFreqIndex,
         this.state.partnerRating, this.state.city, this.state.state,
         this.state.contactName, this.state.contactEmail, this.state.contactPhone,
         () => {
