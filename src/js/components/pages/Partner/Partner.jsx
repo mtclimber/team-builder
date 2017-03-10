@@ -5,6 +5,7 @@ const React = require('react');
 import PageHeader from '../../shared/PageHeader.jsx';
 import ChurchApi from '../../../api/ChurchApi.jsx';
 import CommFrequency from '../../../enums/CommFrequencyTypes.js';
+import Rater from 'react-rater'
 
 class Partner extends React.Component{
   constructor() {
@@ -14,7 +15,7 @@ class Partner extends React.Component{
       address: '',
       address2: '',
       commFreq: null,
-      partnerRating: null,
+      partnerRating: 5,
       city: '',
       state: '',
       contactName: '',
@@ -53,7 +54,8 @@ class Partner extends React.Component{
         this.setState(this.state);
       }
 updateRating(value){
-  this.state.partnerRating = value;
+  console.log(value);
+  this.state.partnerRating = Number(value);
   this.setState(this.state);
 }
 updateFreq(value){
@@ -99,26 +101,23 @@ updateFreq(value){
                 <div className="panel panel-default">
                   <div className="panel-heading clearfix">
                     <i className="icon-calendar" />
-                    <h3 className="panel-title">Partner Information</h3>
+                    <h3 className="panel-title">Partner Information                      <Rater interactive={true} rating={this.state.partnerRating} onRate={(e) => this.updateRating(e.rating)} />
+</h3>
+
                   </div>
+
                   <div className="panel-body">
                     <div className="form-group">
                       <label htmlFor="inputPartner" className="control-label">Name</label>
                       <input value={this.state.partnerName} type="text" className="form-control" id="inputPartner" placeholder="" required onChange={(e) => this.updatePartnerName(e.target.value)}/>
                     </div>
                     <div className="form-group">
-                      <label htmlFor="inputAddress" className="control-label">Street Address</label>
-                      <input value={this.state.address} type="text" className="form-control" id="inputAddress" placeholder="Street address, P.O. box, company name, c/o" />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="inputStreet2" className="control-label" />
-                      <input value={this.state.address2} type="text" className="form-control" id="inputStreet2" placeholder="Apartment, suite, unit, building, floor, etc." />
+                      <label className="control-label">Rating</label>
                     </div>
                     <div className="form-group">
                       <label htmlFor="inputCity" className="control-label">City</label>
                       <input value={this.state.city} type="text" className="form-control" id="inputCity" onChange={(e) => this.updateCity(e.target.value)} />
                     </div>
-                    <div className="form-group">
                       <div className="form-group">
                         <label htmlFor="state_id" className="control-label" onChange={(e) => this.updateState(e.target.value)}>State</label>
                         <select className="select form-control" id="state_id" placeholder="State">
@@ -175,7 +174,6 @@ updateFreq(value){
                           <option value="WI">Wisconsin</option>
                           <option value="WY">Wyoming</option>
                         </select>
-                      </div>
                     </div>
                   </div>
                 </div>
