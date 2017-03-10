@@ -22,8 +22,6 @@ getLastDayContacted = function(partner) {
 
 calc = function(health, lastDate, currentDate, historyItemValue, multiplier) {
     days = currentDate.diff(lastDate, 'days');
-    console.log(days);
-    console.log(multiplier);
     health -= days * multiplier;
     if(health < 0)
         health = 0;
@@ -32,8 +30,6 @@ calc = function(health, lastDate, currentDate, historyItemValue, multiplier) {
     if(health > 100)
         health = 100;
     
-    console.log('health');
-    console.log(health);
     return health;
 }
 
@@ -174,7 +170,6 @@ module.exports = function(app) {
 
             partner.history.push({note: note, audience_type: at, interaction_type: it});
 
-            console.log(partner.history);
             partner.save(function(err) {
                 if (err)
                     res.send(err);

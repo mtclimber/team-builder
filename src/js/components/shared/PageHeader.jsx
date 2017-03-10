@@ -18,6 +18,7 @@ class PageHeader extends React.Component{
         </div>
         <div id="navbar" className="navbar-collapse collapse">
           <ul className="nav navbar-nav navbar-right">
+              <li><Link to='/partner'>Add Partner</Link></li>
               <li><Link to='/register'>Registration</Link></li>
               <li><Link to='/report'>Report</Link></li>
           </ul>
