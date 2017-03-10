@@ -10,7 +10,6 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
-const routes = require('./src/routes/index');
 const app = express();
 
 app.use(logger('dev'));
@@ -34,6 +33,10 @@ passport.deserializeUser(Member.deserializeUser());
 
 // mongoose
 mongoose.connect(config.database);
+
+require('./src/routes/team')(app);
+require('./src/routes/partner')(app);
+require('./src/routes/member')(app);
 
 app.get('/*', (req, res) => {
     const file = __dirname + '/index.html';
