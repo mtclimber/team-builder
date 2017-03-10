@@ -32,7 +32,6 @@ class Churches extends React.Component{
         <div className='row'>
           <div className='col-xs-12' style={{'marginBottom': '10px'}}>
             <h1 style={{'marginBottom': '0px 0px 15px 0px'}}>Partnerships</h1>
-            <Link to='/partner' className='btn btn-success'>Add Partner</Link>
           </div>
         </div>
         <div className='row'>
