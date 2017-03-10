@@ -21,12 +21,12 @@ class BackCard extends React.Component{
     this.state.audience = name;
     this.setState(this.state);
   }
-  
+
   interactionClick(name) {
     this.state.interaction = name;
     this.setState(this.state);
   }
-  
+
   save() {
     const at = AudienceTypes.indexOf(this.state.audience);
     const it = InteractionTypes.indexOf(this.state.interaction);
@@ -54,7 +54,7 @@ class BackCard extends React.Component{
 
   updateNotes(notes) {
     this.state.notes = notes;
-    this.setState(this.state); 
+    this.setState(this.state);
   }
 
   render() {
@@ -131,7 +131,7 @@ class Church extends React.Component{
       <div className={flipclass}>
         <div className="flipper">
           <div className="front">
-            <ChurchOverview id={this.props.id} name={this.props.name} healthIndex={this.props.healthIndex} lastContacted={this.props.lastContacted} flipCard={(flipped) => this.flipCard(flipped)} />
+            <ChurchOverview partnerRating={this.props.partnerRating} id={this.props.id} name={this.props.name} healthIndex={this.props.healthIndex} lastContacted={this.props.lastContacted} flipCard={(flipped) => this.flipCard(flipped)} />
           </div>
           <div className="back">
             <BackCard id={this.props.id} name={this.props.name} flipCard={(flipped) => this.flipCard(flipped)} />

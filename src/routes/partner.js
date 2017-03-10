@@ -25,11 +25,11 @@ calc = function(health, lastDate, currentDate, historyItemValue, multiplier) {
     health -= days * multiplier;
     if(health < 0)
         health = 0;
-    
+
     health += historyItemValue;
     if(health > 100)
         health = 100;
-    
+
     return health;
 }
 
@@ -65,7 +65,7 @@ module.exports = function(app) {
 
         partner.name = req.body.name;
         partner.commfreq = req.body.commfreq;
-        partner_rating = req.body.partner_rating;
+        partner.partner_rating = req.body.partner_rating;
         partner.city = req.body.city;
         partner.state = req.body.state;
         partner.primary_name = req.body.primary_name;
@@ -74,7 +74,7 @@ module.exports = function(app) {
         partner.teammember = req.body.teammember;
         partner.history =[];
         partner.save(function(err) {
-            if (err) { res.send(err); }
+            if (err) { console.log(err); return res.send(err); }
             res.json({ message: 'Partner added!', data: partner });
         });
     });
@@ -152,7 +152,7 @@ module.exports = function(app) {
         Partner.findByIdAndRemove(req.params.partner_id, function(err) {
             if (err)
                 res.send(err);
-            
+
             res.send('success');
         })
     });
