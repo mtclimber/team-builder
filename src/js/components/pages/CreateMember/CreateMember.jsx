@@ -40,7 +40,7 @@ class CreateMember extends React.Component{
       this.setState(this.state);
     } else {
       MemberApi.createMember(this.state.name, this.state.username, this.state.team, this.state.leadingTeamName, () => {
-        // window.location="/";
+        window.location="/";
       });
     }
   }
