@@ -40,7 +40,7 @@ class Churches extends React.Component{
             if(this.state.focused === null || this.state.focused === church.name)
             return (
               <div key={church.name} className={churchRowClasses} style={churchRowStyle} >
-                <Church name={church.name} healthIndex={church.healthIndex} lastContacted={church.lastContacted} setFocused={(name) => this.setFocused(name)}/>
+                <Church id={church._id} name={church.name} healthIndex={church.healthIndex} lastContacted={church.lastContacted} setFocused={(name) => this.setFocused(name)}/>
               </div>
             );
           })}

@@ -11,6 +11,7 @@ const historySchema = new Schema({
     date: {type: Date, default: Date.now},
     audience_type: {type: Number, min: 0},
     interaction_type: {type: Number, min: 0},
+    note: {type: String}
 });
 
 const partnerSchema = new Schema({

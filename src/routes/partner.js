@@ -10,8 +10,6 @@ module.exports = function(app) {
     const partnersRoute = router.route('/partners');
 
     partnersRoute.post(function(req, res) {
-
-        console.log('here');
         const partner = new Partner();
 
         partner.name = req.body.name;
@@ -24,7 +22,6 @@ module.exports = function(app) {
         partner.primary_email = req.body.primary_email;
         partner.teammember = req.body.teammember;
         partner.history =[];
-        console.log(partner);
         partner.save(function(err) {
             if (err) { res.send(err); }
             res.json({ message: 'Partner added!', data: partner });
@@ -91,4 +88,26 @@ module.exports = function(app) {
         });
     });
 
+    const historyRoute = router.route('/history/:partner_id');
+
+    historyRoute.post(function(req, res) {
+        Partner.findById(req.params.partner_id, function(err, partner) {
+            if (err)
+                res.send(err);
+
+            var note = req.body.note;
+            var at = req.body.audience_type;
+            var it = req.body.interaction_type;
+
+            partner.history.push({note: note, audience_type: at, interaction_type: it});
+
+            console.log(partner.history);
+            partner.save(function(err) {
+                if (err)
+                    res.send(err);
+
+                res.json(partner);
+            });
+        });
+    });
 };

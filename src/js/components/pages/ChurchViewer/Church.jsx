@@ -34,7 +34,7 @@ class BackCard extends React.Component{
       this.state.error = 'Choosing an audience and interaction method is required.';
       this.setState(this.state);
     } else {
-      ChurchApi.addChurchContact(at, it, this.state.notes, () => {
+      ChurchApi.addChurchContact(this.props.id, at, it, this.state.notes, () => {
         this.props.flipCard(false);
         this.state = {
           audience: null,
@@ -134,7 +134,7 @@ class Church extends React.Component{
             <ChurchOverview name={this.props.name} healthIndex={this.props.healthIndex} lastContacted={this.props.lastContacted} flipCard={(flipped) => this.flipCard(flipped)} />
           </div>
           <div className="back">
-            <BackCard name={this.props.name} flipCard={(flipped) => this.flipCard(flipped)} />
+            <BackCard id={this.props.id} name={this.props.name} flipCard={(flipped) => this.flipCard(flipped)} />
           </div>
         </div>
       </div>

@@ -32,11 +32,11 @@ class Church {
     });
   }
 
-  static addChurchContact(audienceType, interactionType, notes, cb) {
-    $.put(`/api/church/contact`, {
-      audienceType: audienceType,
-      interactionType: interactionType,
-      notes: notes
+  static addChurchContact(partnerId, audienceType, interactionType, notes, cb) {
+    $.post(`/api/history/${partnerId}`, {
+      audience_type: audienceType,
+      interaction_type: interactionType,
+      note: notes
     })
     .done((response) => {
       cb(response);
