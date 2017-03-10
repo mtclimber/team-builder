@@ -15,13 +15,14 @@ class Church {
   static createPartner(name, commFreq, partnerRating, city, state, pc_name, pc_phone, pc_email) {
     $.post(`/api/partners`, {
       name: name,
-      commFreq: commFreq,
-      partnerRating: partnerRating,
+      commfreq: commFreq,
+      partner_rating: partnerRating,
       city: city,
       state: state,
-      pc_name: pc_name,
-      pc_phone: pc_phone,
-      pc_email: pc_email
+      primary_name: pc_name,
+      primary_phone: pc_phone,
+      primary_email: pc_email,
+      teammember: ''
     })
     .done((response) => {
       cb(response);

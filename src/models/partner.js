@@ -20,7 +20,6 @@ const partnerSchema = new Schema({
     partner_rating: { type: Number, min: 0, default: 1 },
     city: { type: String, default: '' },
     state: { type: String, default: '' },
-    other: { type: Boolean},
     primary_name: { type: String, default: '' },
     primary_phone: { type: String, default: '' },
     primary_email: { type: String, default: '' },
