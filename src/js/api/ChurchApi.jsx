@@ -12,13 +12,13 @@ class Church {
     });
   };
 
-  static createPartner(name, commFreq, city, state, other, pc_name, pc_phone, pc_email) {
+  static createPartner(name, commFreq, partnerRating, city, state, pc_name, pc_phone, pc_email) {
     $.post(`/api/partners`, {
       name: name,
       commFreq: commFreq,
+      partnerRating: partnerRating,
       city: city,
       state: state,
-      other: other,
       pc_name: pc_name,
       pc_phone: pc_phone,
       pc_email: pc_email
