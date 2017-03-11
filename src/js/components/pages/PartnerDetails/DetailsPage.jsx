@@ -8,6 +8,7 @@ import ChurchApi from '../../../api/ChurchApi.jsx';
 import Loading from '../../shared/Loading.jsx';
 import CommFrequencyType from '../../../enums/CommFrequencyTypes.js';
 import HistoryFeed from './HistoryFeed.jsx';
+import Rater from 'react-rater'
 
 class DetailsPage extends React.Component{
   constructor() {
@@ -32,7 +33,9 @@ class DetailsPage extends React.Component{
       this.setState(this.state);
     });
   }
-
+edit(){
+  
+}
   getCommunicationNeeds() {
     var cm = Number(this.state.partner.partner.commfreq);
     var val = CommFrequencyType[cm];
@@ -40,7 +43,7 @@ class DetailsPage extends React.Component{
   }
   getProgressBar() {
     var healthIndex = Number(this.state.partner.healthIndex);
-    
+
     if(healthIndex >= 90)
       return "success";
     else if(healthIndex >= 50)
@@ -90,9 +93,11 @@ class DetailsPage extends React.Component{
       'fontWeight': 'bold',
       'fontSize': '18px',
     }
-
     return (
       <div style={{'textAlign': 'center'}}>
+        <div>
+          <Rater interactive={false} rating={this.state.partner.partner.partner_rating} />
+        </div>
         <img style={{'height': churchSize, 'width': churchSize}} src={`/images/${this.getImageSource()}.png`} />
         <div className="progress" style={{'margin': '10px auto 15px auto'}}>
           <div className={`progress-bar progress-bar-${this.getProgressBar()}`} role="progressbar" aria-valuenow={hi} aria-valuemin="0" aria-valuemax="100" style={{'width': `${hi}%`}}>
@@ -115,6 +120,13 @@ class DetailsPage extends React.Component{
           <p style={feedHeaderStyle}>Communication Feed</p>
           <HistoryFeed history={partner.history} />
         </div>
+        <div className="form-group">
+          <label className="control-label" />
+          <div className="text-left">
+            <button className='btn btn-primary' style={{'marginRight': '10px'}} onClick={() => this.edit()}>Edit</button>
+          </div>
+        </div>
+
       </div>
     )
   }
