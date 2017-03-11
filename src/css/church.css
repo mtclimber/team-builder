@@ -22,7 +22,7 @@ body {
 	width: 75%;
 	height: 300px;
   max-width: 400px;
-  min-width: 320px;
+  min-width: 300px;
   transition: height 1s ease;
 }
 
