@@ -53,7 +53,11 @@ getHealthIndex = function(partner) {
         lastDate = moment(partner.history[i].date);
     }
 
-    return calc(health, lastDate, now, 0, multiplier);
+    var health = calc(health, lastDate, now, 0, multiplier);
+    if(health <= 0)
+        return 1;
+    
+    return health;
 }
 
 getChurchData = function(memberId, data, churches, members, recursive) {
