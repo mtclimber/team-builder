@@ -47,7 +47,6 @@ getHealthIndex = function(partner) {
     var health = 100;
 
     for(var i = 0; i < partner.history.length; i++) {
-        console.log(partner);
         var val = config.contactValue[`${partner.history[i].audience_type}`][`${partner.history[i].interaction_type}`];
         health = calc(health, lastDate, moment(partner.history[i].date), val, multiplier);
         lastDate = moment(partner.history[i].date);
@@ -94,9 +93,7 @@ getChurchData = function(memberId, data, churches, members, recursive) {
 }
 
 getLeadingTeamNameFromMemberId = function(memberId, teams) {
-    console.log(memberId);
     var val =  _.find(teams, {'leader': memberId.toString()});
-    console.log(val);
     return val.name;
 }
 
@@ -107,7 +104,6 @@ getChurchDataFromLeader = function(memberId, cb) {
                     var dataPoints = [];
                     var tls = _.filter(allMembers, {'leader': memberId.toString()});
                     tls.push(member);
-                    console.log(tls);
                     for(var i = 0; i < tls.length; i++) {
                         var uids = getChurchData(tls[i]._id, {
                             name: tls[i].username,
@@ -125,11 +121,9 @@ getChurchDataFromLeader = function(memberId, cb) {
                     Team.find((err, allTeams) => {
                         for(var i = 0; i < dataPoints.length; i++) {
                             if(dataPoints[i].hasTeamMembers === true || i === dataPoints.length - 1) {
-                                console.log('trying');
                                 dataPoints[i].teamName = getLeadingTeamNameFromMemberId(dataPoints[i].id, allTeams);
                             }
                         }
-                        console.log(dataPoints);  
                         cb(dataPoints);
                     })
                 })
@@ -151,34 +145,23 @@ module.exports = function(app) {
         const partner = new Partner();
 
         partner.name = req.body.name;
-        // partner.commfreq = req.body.commfreq;
-        partner.commfreq = getRandom(2, 0);
-        // partner.partner_rating = req.body.partner_rating;
-        partner.partner_rating = getRandom(5, 1);
-        partner.city = "Bristow";
-        partner.state = "Oklahoma";
-        partner.primary_name = "Ryan Tankersley";
-        partner.primary_phone = "918-555-5555";
-        partner.primary_email = "asdf@gmail.com";
-
-        Member.find((err, allMembers) => {
-            var ids = allMembers.map((member) => {
-                return member._id;
-            });
-
-            console.log(ids);
-
-            partner.teammember = ids[getRandom(ids.length - 1, 0)];
-            partner.date_created = moment().subtract('days', getRandom(200, 1)).toISOString();
-
-            partner.history =[];
-            partner.save(function(err) {
-                if (err) { console.log(err); return res.send(err); }
-                res.json({ message: 'Partner added!', data: partner });
-            });
-        })
-
-        
+        partner.commfreq = req.body.commfreq;
+        // partner.commfreq = getRandom(2, 0);
+        partner.partner_rating = req.body.partner_rating;
+        // partner.partner_rating = getRandom(5, 1);
+        partner.city = req.body.city;
+        partner.state = req.body.state;
+        partner.primary_name = req.body.primary_name;
+        partner.primary_phone = req.body.primary_phone;
+        partner.primary_email = req.body.primary_email;
+        partner.teammember = req.body.teammember;
+        partner.date_created = moment().toISOString();
+        partner.history =[];
+        console.log(partner);
+        partner.save(function(err) {
+            if (err) { console.log(err); return res.send(err); }
+            res.json({ message: 'Partner added!', data: partner });
+        });
     });
 
     partnersRoute.get(function(req, res) {
