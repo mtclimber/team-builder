@@ -42,11 +42,15 @@ body {
 
 /* hide back of pane during swap */
 .front, .back {
-	backface-visibility: hidden;
-
-	position: absolute;
-	top: 0;
-	left: 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: 0.6s;
+    transition: 0.6s;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 /* front pane, placed above back */
@@ -57,15 +61,20 @@ body {
 	/* for firefox 31 */
 	transform: rotateY(0deg);
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    -webkit-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+
 }
 
 /* back, initially hidden pane */
 .back {
 	z-index: 0;
-  background-color: white;
-  padding: 10px;
+     background-color: white;
+    padding: 10px;
 	transform: rotateY(180deg);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    -webkit-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
 }
 
 .flip-container.flipped .back {
