@@ -32,9 +32,8 @@ class DetailsPage extends React.Component{
       } else {
         this.state.partner = response;
       }
-console.log(response.partner.teammember);
+
       MemberApi.getById(response.partner.teammember, (memberResponse) => {
-        console.log('getId');
         this.state.member = memberResponse;
         this.setState(this.state);
         });
@@ -109,10 +108,10 @@ console.log(response.partner.teammember);
       'fontWeight': 'bold',
       'fontSize': '18px',
     }
-
+console.log(partner);
     let updateCancelButton = (
       <div className="text-left">
-        <Link to={'partner/' + partner.partner_id} className='btn btn-primary' style={{'float': 'left', 'marginLeft': '5px'}}>Edit</Link>
+        <Link to={'partner/' + partner._id} className='btn btn-primary' style={{'float': 'left', 'marginLeft': '5px'}}>Edit</Link>
         <Link to={'partnerships/' + member.username} className='btn btn-danger' style={{'float': 'left', 'marginLeft': '5px'}}>Close</Link>
       </div>
       )
