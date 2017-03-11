@@ -29,6 +29,13 @@ class Dashboard extends React.Component{
           this.state.error = 'Could not find user with id ' + config.loggedInId;
           
         this.setState(this.state);
+
+        ChurchApi.getPartners((response) => {
+      this.state.loading = false;
+      response = _.sortBy(response, ['healthIndex']);
+      this.state.partners = response;
+      this.setState(this.state);
+    });
       })
     } else {
       MemberApi.getByUsername(this.props.params.username, (response) => {
@@ -38,15 +45,17 @@ class Dashboard extends React.Component{
           this.state.error = 'Could not find user with username ' + this.props.params.username;
           
         this.setState(this.state);
-      })
-    }
 
-    ChurchApi.getPartners((response) => {
+        ChurchApi.getPartners((response) => {
       this.state.loading = false;
       response = _.sortBy(response, ['healthIndex']);
       this.state.partners = response;
       this.setState(this.state);
     });
+      })
+    }
+
+    
   }
 
   renderError() {
