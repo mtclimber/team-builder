@@ -17,6 +17,16 @@ class Member {
     });
   };
 
+  static getById(id, cb) {
+    $.get(`/api/members/` + id)
+    .done((response) => {
+      cb(response);
+    })
+    .fail((response) => {
+      cb(response);
+    });
+  };
+
   static getByUsername(username, cb) {
     $.get(`/api/members/byusername/` + username)
     .done((response) => {
@@ -26,7 +36,7 @@ class Member {
       cb(response);
     });
   };
-  
+
   static getTeams(cb) {
     $.get(`/api/teams`)
     .done((response) => {
