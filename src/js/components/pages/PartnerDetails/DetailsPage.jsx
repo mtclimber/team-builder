@@ -5,10 +5,13 @@ const moment = require('moment');
 
 import PageHeader from '../../shared/PageHeader.jsx';
 import ChurchApi from '../../../api/ChurchApi.jsx';
+import MemberApi from '../../../api/MemberApi.jsx';
 import Loading from '../../shared/Loading.jsx';
 import CommFrequencyType from '../../../enums/CommFrequencyTypes.js';
 import HistoryFeed from './HistoryFeed.jsx';
 import Rater from 'react-rater'
+import {Link} from 'react-router';
+import config from '../../../../../lib/config.js';
 
 class DetailsPage extends React.Component{
   constructor() {
@@ -17,28 +20,31 @@ class DetailsPage extends React.Component{
       partner: null,
       loading: true,
       readonly: true,
+      member: {username:""},
       error: ''
     }
   }
 
   componentDidMount() {
     ChurchApi.getPartner(this.props.params.partnerId, (response) => {
-      console.log(response);
       if(response.message !== null && response.message !== undefined) {
           this.state.error = 'The partner was not found.';
       } else {
         this.state.partner = response;
       }
+console.log(response.partner.teammember);
+      MemberApi.getById(response.partner.teammember, (memberResponse) => {
+        console.log('getId');
+        this.state.member = memberResponse;
+        this.setState(this.state);
+        });
 
       this.state.loading = false;
       this.setState(this.state);
     });
+
   }
 
-  edit() {
-    this.state.readonly = false;
-    this.setState(this.state);
-  }
   cancel() {
     this.state.readonly = true;
     this.setState(this.state);
@@ -85,8 +91,10 @@ class DetailsPage extends React.Component{
     return `${days} days ago`;
   }
 
+
   renderPartner() {
     const partner = this.state.partner.partner;
+    const member = this.state.member
     const hi = this.state.partner.healthIndex;
     const lc = this.state.partner.lastContacted;
     const prettyDate = moment(this.state.partner.date_created).format('MMMM Do YYYY');;
@@ -101,21 +109,14 @@ class DetailsPage extends React.Component{
       'fontWeight': 'bold',
       'fontSize': '18px',
     }
+
     let updateCancelButton = (
       <div className="text-left">
-        <button className='btn btn-primary' style={{'marginRight': '10px'}} onClick={() => this.edit()}>Edit</button>
-        <button className='btn btn-primary' style={{'marginRight': '10px'}} onClick={() => this.cancel()}>Close</button>
-        </div>
+        <Link to={'partner/' + partner.partner_id} className='btn btn-primary' style={{'float': 'left', 'marginLeft': '5px'}}>Edit</Link>
+        <Link to={'partnerships/' + member.username} className='btn btn-danger' style={{'float': 'left', 'marginLeft': '5px'}}>Close</Link>
+      </div>
       )
-    if (!this.state.readonly) {
-      updateCancelButton = (
-        <div className="text-left">
-            <button className='btn btn-primary' style={{'marginRight': '10px'}} onClick={() => this.save()}>Save</button>
-            <button className='btn btn-primary' style={{'marginRight': '10px'}} onClick={() => this.cancel()}>Cancel</button>
-            </div>
-    )
 
-    }
     return (
       <div style={{'textAlign': 'center'}}>
         <div>
@@ -140,7 +141,7 @@ class DetailsPage extends React.Component{
           <p>{`${partner.city}, ${partner.state}`}</p>
           <p style={headerStyle}>Communication Needs</p>
           <p>{this.getCommunicationNeeds()}</p>
-          <p style={feedHeaderStyle}>Communication Feed</p>
+          <p style={feedHeaderStyle}>Communication History</p>
           <HistoryFeed history={partner.history} />
         </div>
         <div className="form-group">
@@ -148,10 +149,7 @@ class DetailsPage extends React.Component{
           <div className="text-left">
             <div className="form-group">
               <label className="control-label" />
-                <p className='text-danger'>{this.state.error}</p>
-
                 {updateCancelButton}
-
             </div>
           </div>
         </div>
