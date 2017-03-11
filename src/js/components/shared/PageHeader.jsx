@@ -5,6 +5,12 @@ import {Link} from 'react-router';
 
 class PageHeader extends React.Component{
   render() {
+
+    let button = (<Link to='/Login'>Login</Link>)
+//    if (this.props.isLoggedIn) {
+      button = (<Link to='/Logout'>Logout</Link>)
+  //  }
+
     return (
       <nav className="navbar navbar-inverse">
         <div className="navbar-header">
@@ -20,8 +26,8 @@ class PageHeader extends React.Component{
           <ul className="nav navbar-nav navbar-right">
               <li><Link to='/partner'>Add Partner</Link></li>
               <li><Link to='/create-member'>Add Member</Link></li>
-              <li><Link to='/Login'>Login</Link></li>
               <li><Link to='/report'>Report</Link></li>
+              <li>{button}</li>
           </ul>
         </div>
       </nav>

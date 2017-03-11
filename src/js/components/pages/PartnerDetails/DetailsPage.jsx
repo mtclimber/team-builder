@@ -16,6 +16,7 @@ class DetailsPage extends React.Component{
     this.state = {
       partner: null,
       loading: true,
+      readonly: true,
       error: ''
     }
   }
@@ -33,14 +34,21 @@ class DetailsPage extends React.Component{
       this.setState(this.state);
     });
   }
-edit(){
-  
-}
+
+  edit() {
+    this.state.readonly = false;
+    this.setState(this.state);
+  }
+  cancel() {
+    this.state.readonly = true;
+    this.setState(this.state);
+  }
   getCommunicationNeeds() {
     var cm = Number(this.state.partner.partner.commfreq);
     var val = CommFrequencyType[cm];
     return val;
   }
+
   getProgressBar() {
     var healthIndex = Number(this.state.partner.healthIndex);
 
@@ -93,10 +101,25 @@ edit(){
       'fontWeight': 'bold',
       'fontSize': '18px',
     }
+    let updateCancelButton = (
+      <div className="text-left">
+        <button className='btn btn-primary' style={{'marginRight': '10px'}} onClick={() => this.edit()}>Edit</button>
+        <button className='btn btn-primary' style={{'marginRight': '10px'}} onClick={() => this.cancel()}>Close</button>
+        </div>
+      )
+    if (!this.state.readonly) {
+      updateCancelButton = (
+        <div className="text-left">
+            <button className='btn btn-primary' style={{'marginRight': '10px'}} onClick={() => this.save()}>Save</button>
+            <button className='btn btn-primary' style={{'marginRight': '10px'}} onClick={() => this.cancel()}>Cancel</button>
+            </div>
+    )
+
+    }
     return (
       <div style={{'textAlign': 'center'}}>
         <div>
-          <Rater interactive={false} rating={this.state.partner.partner.partner_rating} />
+          <Rater interactive={!this.state.readonly} rating={this.state.partner.partner.partner_rating} />
         </div>
         <img style={{'height': churchSize, 'width': churchSize}} src={`/images/${this.getImageSource()}.png`} />
         <div className="progress" style={{'margin': '10px auto 15px auto'}}>
@@ -123,7 +146,13 @@ edit(){
         <div className="form-group">
           <label className="control-label" />
           <div className="text-left">
-            <button className='btn btn-primary' style={{'marginRight': '10px'}} onClick={() => this.edit()}>Edit</button>
+            <div className="form-group">
+              <label className="control-label" />
+                <p className='text-danger'>{this.state.error}</p>
+
+                {updateCancelButton}
+
+            </div>
           </div>
         </div>
 
