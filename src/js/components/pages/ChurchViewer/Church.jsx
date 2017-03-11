@@ -125,8 +125,6 @@ class Church extends React.Component{
     if(flipped === true)
       this.props.setFocused(this.props.name, healthIndex);
     else {
-      console.log('healthIndex');
-      console.log(healthIndex);
       this.props.setFocused(null, healthIndex);
     }
   }
@@ -144,7 +142,7 @@ class Church extends React.Component{
             <ChurchOverview partnerRating={this.props.partnerRating} id={this.props.id} name={this.props.name} healthIndex={this.props.healthIndex} lastContacted={this.props.lastContacted} flipCard={(flipped, hi) => this.flipCard(flipped, hi)} />
           </div>
           <div className="back">
-            <BackCard id={this.props.id} name={this.props.name} flipCard={(flipped, hi) => {console.log('in that thing'); console.log(hi); this.flipCard(flipped, hi)}} />
+            <BackCard id={this.props.id} name={this.props.name} flipCard={(flipped, hi) => {this.flipCard(flipped, hi)}} />
           </div>
         </div>
       </div>

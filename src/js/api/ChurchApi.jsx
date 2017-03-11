@@ -42,7 +42,7 @@ class Church {
       primary_name: pc_name,
       primary_phone: pc_phone,
       primary_email: pc_email,
-      teammember: ''
+      teammember: '58c2c6f054072335e00c5977'
     })
     .done((response) => {
       cb(response);

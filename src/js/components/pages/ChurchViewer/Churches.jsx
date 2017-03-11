@@ -20,20 +20,12 @@ class Churches extends React.Component{
     this.state.churches = this.props.churches;
   }
   setFocused(name, health) {
-    console.log('name ' + name);
-    console.log('health ' + health);
     if(name === null) {
       for(var i = 0; i < this.state.churches.length; i++) {
         if(this.state.churches[i].partner.name === this.state.focused) {
-          console.log('did this too');
           var num = Number(this.state.churches[i].healthIndex);
-          console.log(num);
-          console.log('health');
-          console.log(health);
           num += Number(health);
-          console.log(num);
           this.state.churches[i].healthIndex = num;
-          console.log(this.state.churches[i].healthIndex);
         }
       }
     }
@@ -51,12 +43,6 @@ class Churches extends React.Component{
     if(this.state.focused !== null)
       churchRowClasses = 'col-xs-12 col-sm-12 col-md-8 col-lg-8';
 
-for(var i = 0; i < this.state.churches.length; i++) {
-        if(this.state.churches[i].partner.name === 'First Baptist Church of Denver') {
-          console.log('in the info stuff');
-          console.log(this.state.churches[i].healthIndex);
-        }
-      }
     return (
       <div>
         <div className='row'>
