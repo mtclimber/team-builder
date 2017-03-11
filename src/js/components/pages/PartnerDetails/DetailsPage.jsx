@@ -108,7 +108,7 @@ class DetailsPage extends React.Component{
       'fontWeight': 'bold',
       'fontSize': '18px',
     }
-console.log(partner);
+
     let updateCancelButton = (
       <div className="text-left">
         <Link to={'partner/' + partner._id} className='btn btn-primary' style={{'float': 'left', 'marginLeft': '5px'}}>Edit</Link>

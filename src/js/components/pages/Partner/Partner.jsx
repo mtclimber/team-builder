@@ -22,10 +22,31 @@ class Partner extends React.Component{
       contactName: '',
       contactEmail: '',
       contactPhone: '',
+      isNew: true,
       error: ''
+
     }
   }
+  componentDidMount() {
+    ChurchApi.getPartner(this.props.params.partnerId, (response) => {
+      if(response.message !== null && response.message !== undefined) {
+          this.state.isNew = true;
+      } else {
+        this.state.partnerName = response.partner.name;
+        this.state.commFreq = response.partner.commFreq;
+        this.state.partnerRating = response.partner.partner_rating;
+        this.state.city = response.partner.city;
+        this.state.state = response.partner.state;
+        this.state.contactName = response.partner.primary_name;
+        this.state.contactEmail = response.partner.primary_email;
+        this.state.contactPhone = response.partner.primary_phone;
+        this.state.isNew = false;
+      }
 
+      this.setState(this.state);
+    });
+
+  }
   save() {
     const freq = CommFrequency.indexOf(this.state.commFreq);
     if(this.state.partnerName.length == 0) {
