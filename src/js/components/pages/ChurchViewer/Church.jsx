@@ -5,6 +5,7 @@ import ChurchOverview from './ChurchOverview.jsx';
 import ChurchApi from '../../../api/ChurchApi.jsx';
 import AudienceTypes from '../../../enums/AudienceTypes.js';
 import InteractionTypes from '../../../enums/InteractionTypes.js';
+import config from '../../../../../lib/config.js';
 
 class BackCard extends React.Component{
   constructor() {
@@ -27,6 +28,11 @@ class BackCard extends React.Component{
     this.setState(this.state);
   }
 
+  calculateHealthWorth() {
+    return config.contactValue[AudienceTypes.indexOf(this.state.audience)][InteractionTypes.indexOf(this.state.interaction)];
+
+  }
+
   save() {
     const at = AudienceTypes.indexOf(this.state.audience);
     const it = InteractionTypes.indexOf(this.state.interaction);
@@ -35,7 +41,8 @@ class BackCard extends React.Component{
       this.setState(this.state);
     } else {
       ChurchApi.addChurchContact(this.props.id, at, it, this.state.notes, () => {
-        this.props.flipCard(false);
+        var calcValue = this.calculateHealthWorth();
+        this.props.flipCard(false, calcValue);
         this.state = {
           audience: null,
           interaction: null,
@@ -49,7 +56,7 @@ class BackCard extends React.Component{
   }
 
   cancel() {
-    this.props.flipCard(false);
+    this.props.flipCard(false, 0);
   }
 
   updateNotes(notes) {
@@ -112,13 +119,16 @@ class Church extends React.Component{
     }
   }
 
-  flipCard(flipped) {
+  flipCard(flipped, healthIndex) {
     this.state.flipped = flipped;
     this.setState(this.state);
     if(flipped === true)
-      this.props.setFocused(this.props.name);
-    else
-      this.props.setFocused(null);
+      this.props.setFocused(this.props.name, healthIndex);
+    else {
+      console.log('healthIndex');
+      console.log(healthIndex);
+      this.props.setFocused(null, healthIndex);
+    }
   }
 
   render() {
@@ -131,10 +141,10 @@ class Church extends React.Component{
       <div className={flipclass}>
         <div className="flipper">
           <div className="front">
-            <ChurchOverview partnerRating={this.props.partnerRating} id={this.props.id} name={this.props.name} healthIndex={this.props.healthIndex} lastContacted={this.props.lastContacted} flipCard={(flipped) => this.flipCard(flipped)} />
+            <ChurchOverview partnerRating={this.props.partnerRating} id={this.props.id} name={this.props.name} healthIndex={this.props.healthIndex} lastContacted={this.props.lastContacted} flipCard={(flipped, hi) => this.flipCard(flipped, hi)} />
           </div>
           <div className="back">
-            <BackCard id={this.props.id} name={this.props.name} flipCard={(flipped) => this.flipCard(flipped)} />
+            <BackCard id={this.props.id} name={this.props.name} flipCard={(flipped, hi) => {console.log('in that thing'); console.log(hi); this.flipCard(flipped, hi)}} />
           </div>
         </div>
       </div>
