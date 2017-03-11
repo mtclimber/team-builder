@@ -22,11 +22,18 @@ class Dashboard extends React.Component{
 
   componentDidMount() {
     if(this.props.params.username === undefined) {
-      this.state.focusedMember = config.loggedInId;
+      MemberApi.getById(config.loggedInId, (response) => {
+        if(response !== null)
+          this.state.focusedMember = response;
+        else
+          this.state.error = 'Could not find user with id ' + config.loggedInId;
+          
+        this.setState(this.state);
+      })
     } else {
       MemberApi.getByUsername(this.props.params.username, (response) => {
         if(response !== null)
-          this.state.focusedMember = response._id;
+          this.state.focusedMember = response;
         else
           this.state.error = 'Could not find user with username ' + this.props.params.username;
           
@@ -53,6 +60,8 @@ class Dashboard extends React.Component{
     let loading = null;
     if(this.state.loading === true)
       loading = (<Loading />)
+    else
+        loading = (<Churches focusedMember={this.state.focusedMember} churches={this.state.partners}/>);
 
     let error = null;
     if(this.state.error !== '')
@@ -61,7 +70,6 @@ class Dashboard extends React.Component{
     return (
       <div>
         <PageHeader />
-        <Churches focusedMember={this.state.focusedMember} churches={this.state.partners}/>  
         {loading}
         {error}
       </div>
