@@ -63,7 +63,7 @@ class ChurchOverview extends React.Component {
         <div style={{'position': 'absolute', 'bottom': '10px', 'left': '0px', 'width': '100%'}}>
           <button className='btn btn-primary' style={{'float': 'left', 'marginLeft': '10px'}} onClick={() => this.contact()}>Report Contact</button>
           <Link to={'details/' + this.props.id} className='btn btn-primary' style={{'float': 'left', 'marginLeft': '5px'}}>Details</Link>
-          <p style={{'marginTop': '6px', 'float': 'right', 'marginRight': '10px', 'fontSize': '14px'}}>{this.getDaysAgoText()}</p>
+          <p style={{'marginTop': '6px', 'float': 'right', 'marginRight': '10px', 'fontSize': '13px'}}>{this.getDaysAgoText()}</p>
         </div>
       </div>
     );
