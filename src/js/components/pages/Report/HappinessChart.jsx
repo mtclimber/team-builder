@@ -16,7 +16,10 @@ class HappinessChart extends React.Component{
     }
 
     this.props.categories.map((cat) => {
-      data.cats.push(cat.name);
+      if(cat.hasTeamMembers)
+        data.cats.push(cat.teamName);
+      else
+        data.cats.push(cat.name);
       data.great.push(cat.great);
       data.good.push(cat.good);
       data.sad.push(cat.sad);
@@ -63,7 +66,7 @@ class HappinessChart extends React.Component{
   render() {
     return (
      <div className='panel'>
-       <h1 style={{'margin': '5px 0px 20px 15px'}}>Japan Team Report</h1>
+       <h1 style={{'margin': '5px 0px 20px 15px'}}>{this.props.categories[this.props.categories.length - 1].teamName} Team Report</h1>
        <div id="chart"></div>
      </div>
     );

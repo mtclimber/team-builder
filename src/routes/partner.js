@@ -89,34 +89,48 @@ getChurchData = function(memberId, data, churches, members, recursive) {
     return data;
 }
 
+getLeadingTeamNameFromMemberId = function(memberId, teams) {
+    console.log(memberId);
+    var val =  _.find(teams, {'leader': memberId.toString()});
+    console.log(val);
+    return val.name;
+}
 
 getChurchDataFromLeader = function(memberId, cb) {
-    Member.findById(memberId, (err, member) => {
-        Member.find((err, allMembers) => {  
-            Partner.find((err, allPartners) => {
-                
-            var dataPoints = [];
-            var tls = _.filter(allMembers, {'leader': memberId.toString()});
-            tls.push(member);
-            console.log(tls);
-            for(var i = 0; i < tls.length; i++) {
-                var uids = getChurchData(tls[i]._id, {
-                    name: tls[i].username,
-                    id: tls[i]._id,
-                    hasTeamMembers: false,
-                    great: 0,
-                    good: 0,
-                    sad: 0,
-                    mad: 0
-                }, allPartners, allMembers, i !== tls.length - 1);
-                dataPoints.push(uids);
-            }
-             
-                cb(dataPoints);
+        Member.findById(memberId, (err, member) => {
+            Member.find((err, allMembers) => {  
+                Partner.find((err, allPartners) => {
+                    var dataPoints = [];
+                    var tls = _.filter(allMembers, {'leader': memberId.toString()});
+                    tls.push(member);
+                    console.log(tls);
+                    for(var i = 0; i < tls.length; i++) {
+                        var uids = getChurchData(tls[i]._id, {
+                            name: tls[i].username,
+                            id: tls[i]._id,
+                            hasTeamMembers: false,
+                            teamName: '',
+                            great: 0,
+                            good: 0,
+                            sad: 0,
+                            mad: 0
+                        }, allPartners, allMembers, i !== tls.length - 1);
+                        dataPoints.push(uids);
+                    }
+
+                    Team.find((err, allTeams) => {
+                        for(var i = 0; i < dataPoints.length; i++) {
+                            if(dataPoints[i].hasTeamMembers === true || i === dataPoints.length - 1) {
+                                console.log('trying');
+                                dataPoints[i].teamName = getLeadingTeamNameFromMemberId(dataPoints[i].id, allTeams);
+                            }
+                        }
+                        console.log(dataPoints);  
+                        cb(dataPoints);
+                    })
+                })
             })
-        });
-    })
-        
+        })
 }
 
 module.exports = function(app) {
@@ -143,22 +157,24 @@ module.exports = function(app) {
         partner.primary_phone = "918-555-5555";
         partner.primary_email = "asdf@gmail.com";
 
-        const ids = [
-            "58c2c6f054072335e00c5977",
-            "58c2cc5754a43c3e9c4bebfe",
-            "58c2cd0454a43c3e9c4bec00",
-            "58c2cd8754a43c3e9c4bec01",
-            "58c2ce1754a43c3e9c4bec03"
-        ]
+        Member.find((err, allMembers) => {
+            var ids = allMembers.map((member) => {
+                return member._id;
+            });
 
-        partner.teammember = ids[getRandom(5, 0)];
-        partner.date_created = moment().subtract('days', getRandom(200, 1)).toISOString();
+            console.log(ids);
 
-        partner.history =[];
-        partner.save(function(err) {
-            if (err) { console.log(err); return res.send(err); }
-            res.json({ message: 'Partner added!', data: partner });
-        });
+            partner.teammember = ids[getRandom(ids.length - 1, 0)];
+            partner.date_created = moment().subtract('days', getRandom(200, 1)).toISOString();
+
+            partner.history =[];
+            partner.save(function(err) {
+                if (err) { console.log(err); return res.send(err); }
+                res.json({ message: 'Partner added!', data: partner });
+            });
+        })
+
+        
     });
 
     partnersRoute.get(function(req, res) {
