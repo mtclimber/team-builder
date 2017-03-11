@@ -112,8 +112,8 @@ console.log(response.partner.teammember);
 
     let updateCancelButton = (
       <div className="text-left">
-        <Link to={'partner/' + partner.partner_id} className='btn btn-primary' style={{'float': 'left', 'marginLeft': '5px'}}>Edit</Link>
-        <Link to={'partnerships/' + member.username} className='btn btn-danger' style={{'float': 'left', 'marginLeft': '5px'}}>Close</Link>
+        <Link to={'partner/' + partner.partner_id} className='btn btn-primary'>Edit</Link>
+        <Link to={'partnerships/' + member.username} className='btn btn-danger' style={{'marginLeft': '5px'}}>Close</Link>
       </div>
       )
 
