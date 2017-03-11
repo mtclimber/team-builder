@@ -95924,7 +95924,7 @@ var HappinessChart = function (_React$Component) {
       };
 
       this.props.categories.map(function (cat) {
-        data.cats.push(cat.name);
+        if (cat.hasTeamMembers) data.cats.push(cat.teamName);else data.cats.push(cat.name);
         data.great.push(cat.great);
         data.good.push(cat.good);
         data.sad.push(cat.sad);
@@ -95974,7 +95974,8 @@ var HappinessChart = function (_React$Component) {
         React.createElement(
           'h1',
           { style: { 'margin': '5px 0px 20px 15px' } },
-          'Japan Team Report'
+          this.props.categories[this.props.categories.length - 1].teamName,
+          ' Team Report'
         ),
         React.createElement('div', { id: 'chart' })
       );
@@ -96118,7 +96119,6 @@ var Report = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-
       var loading = React.createElement(_Loading2.default, null);
       if (this.state.loading === false) {
         loading = this.renderContent();

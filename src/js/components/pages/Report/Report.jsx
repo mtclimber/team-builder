@@ -68,6 +68,7 @@ class Report extends React.Component{
       window.location='/partnerships/' + dp.name;
     }
   }
+  
   renderContent() {
     return (
       <div className='row'>
@@ -79,7 +80,6 @@ class Report extends React.Component{
   }
   
   render() {
-
     let loading = (<Loading />);
     if(this.state.loading === false) {
       loading = this.renderContent();
